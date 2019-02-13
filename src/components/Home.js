@@ -8,6 +8,7 @@ import Item from './Item';
 const Inventory = styled.section`
   width: 60%;
   margin: 0 auto;
+  margin-top: 150px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
