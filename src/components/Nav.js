@@ -6,15 +6,11 @@ const StyledNav = styled.header`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 150px;
-  position: fixed;
-  top: 0;
-  left: 0;
 `;
 
 const TopBar = styled.section`
   background-color: #464646;
-  height: 30%;
+  height: 45px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -38,12 +34,15 @@ const TopBar = styled.section`
         background: #707070;
       }
     }
+    span {
+      font-size: 2rem;
+    }
   }
 `;
 
 const BottomBar = styled.nav`
   background-color: #ffffff;
-  height: 70%;
+  height: 105px;
   box-shadow: inset 0 -12px 12px -12px rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: space-around;
@@ -66,32 +65,43 @@ const BottomBar = styled.nav`
   }
 `;
 
-const Nav = props => (
-  <StyledNav>
-    <TopBar>
-      <div>
-        <NavLink to="/test">Test</NavLink>
-        <NavLink to="/test">Test</NavLink>
-        <NavLink to="/test">Test</NavLink>
-        <NavLink to="/test">Sign In</NavLink>
-        <NavLink to="/test">Test</NavLink>
-      </div>
-    </TopBar>
-    <BottomBar>
-      <img
-        src="https://cdn.touchbistro.com/wp-content/themes/touchbistro2017/assets/images/logo.png"
-        alt="logo"
-      />
-      <div>
-        <NavLink to="/">HOME</NavLink>
-        <NavLink to="/add-inventory">ADD INVENTORY</NavLink>
-        <NavLink to="/test">TEST</NavLink>
-        <NavLink to="/test">TEST</NavLink>
-        <NavLink to="/test">TEST</NavLink>
-        <NavLink to="/test">TEST</NavLink>
-      </div>
-    </BottomBar>
-  </StyledNav>
-);
-
+class Nav extends React.Component {
+  state = {
+    open: false,
+  };
+  render(){
+    return (
+      <StyledNav>
+        <TopBar>
+          <div>
+            <NavLink to="/test">Test</NavLink>
+            <NavLink to="/test">Test</NavLink>
+            <NavLink to="/test">Test</NavLink>
+            <NavLink to="/test">Sign In</NavLink>
+            <NavLink to="/test">
+              <span className="fas fa-bars" onClick={() => this.setState(prevState => ({ open: !prevState.open }))}></span>
+            </NavLink>
+          </div>
+        </TopBar>
+        {this.state.open
+          ? (
+            <BottomBar>
+              <img
+                src="https://cdn.touchbistro.com/wp-content/themes/touchbistro2017/assets/images/logo.png"
+                alt="placeholder logo from example"
+              />
+              <div>
+                <NavLink to="/">HOME</NavLink>
+                <NavLink to="/add-inventory">ADD INVENTORY</NavLink>
+                <NavLink to="/test">TEST</NavLink>
+                <NavLink to="/test">TEST</NavLink>
+                <NavLink to="/test">TEST</NavLink>
+                <NavLink to="/test">TEST</NavLink>
+              </div>
+            </BottomBar>
+          ) : null }
+      </StyledNav>
+    );
+  }
+}
 export default Nav;
