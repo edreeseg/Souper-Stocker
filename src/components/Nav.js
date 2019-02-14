@@ -45,9 +45,16 @@ const TopBar = styled.section`
       color: #eee;
       user-select: none;
 
-      &:hover {
+      &:hover,
+      &.top-active {
         background: #707070;
       }
+      &:active {
+        background: #848484;
+      }
+    }
+    span {
+      background: ${props => (props.open ? '#707070' : 'transparent')};
     }
   }
 `;
@@ -72,11 +79,33 @@ const BottomBar = styled.nav`
     justify-content: space-between;
     align-items: center;
 
-    a {
+    a,
+    .icon-bottom {
       text-decoration: none;
       color: #222;
-      font-size: 1.8rem;
       user-select: none;
+      cursor: pointer;
+
+      &.bottom-active {
+        .icon-bottom {
+          font-size: 4rem;
+        }
+      }
+    }
+    .refreshing {
+      animation: spin 0.75s linear 0s infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      50% {
+        transform: rotate(180deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
     }
   }
 
@@ -93,11 +122,11 @@ const BottomBar = styled.nav`
   &.tray-enter-active {
     display: flex;
     height: 105px;
-    transition: height 300ms ease;
+    transition: height 200ms ease;
 
     * {
       opacity: 1;
-      transition: opacity 300ms ease;
+      transition: opacity 200ms ease;
     }
   }
   &.tray-enter-done {
@@ -109,31 +138,44 @@ const BottomBar = styled.nav`
   &.tray-exit-active {
     height: 0;
     display: flex;
-    transition: height 300ms ease;
+    transition: height 200ms ease;
 
     * {
       opacity: 0;
-      transition: opacity 300ms ease;
+      transition: opacity 200ms ease;
     }
-  }
-  &.tray-exit-done {
-    display: none;
   }
 `;
 
 class Nav extends React.Component {
-  state = {
-    open: false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      refreshing: false,
+    };
+  }
+  refresh = () => {
+    this.setState({ refreshing: true });
+    setTimeout(() => this.setState({ refreshing: false }), 3000); // Would likely be an AJAX call
   };
   render() {
     return (
       <StyledNav>
-        <TopBar>
+        <TopBar open={this.state.open}>
           <div>
-            <NavLink to="/test">Test</NavLink>
-            <NavLink to="/test">Test</NavLink>
-            <NavLink to="/test">Test</NavLink>
-            <NavLink to="/test">Sign In</NavLink>
+            <NavLink to="/1" activeClassName="top-active">
+              Test
+            </NavLink>
+            <NavLink to="/2" activeClassName="top-active">
+              Test
+            </NavLink>
+            <NavLink to="/3" activeClassName="top-active">
+              Test
+            </NavLink>
+            <NavLink to="/4" activeClassName="top-active">
+              Sign In
+            </NavLink>
             <span
               className="fas fa-clipboard-list icon-top"
               onClick={() =>
@@ -146,21 +188,24 @@ class Nav extends React.Component {
           <BottomBar>
             <img src="https://i.imgur.com/ixE731v.jpg" alt="placeholder logo" />
             <div>
-              <NavLink to="/">
+              <NavLink to="/" exact activeClassName="bottom-active">
                 <span className="fas fa-home icon-bottom" />
               </NavLink>
-              <NavLink to="/add-inventory">
+              <NavLink to="/add-item" activeClassName="bottom-active">
                 <span className="far fa-plus-square icon-bottom" />
               </NavLink>
-              <NavLink to="/test">
+              <NavLink to="/modify-item" activeClassName="bottom-active">
                 <span className="far fa-edit icon-bottom" />
               </NavLink>
-              <NavLink to="/test">
+              <NavLink to="/delete-item" activeClassName="bottom-active">
                 <span className="far fa-minus-square icon-bottom" />
               </NavLink>
-              <NavLink to="/test">
-                <span className="fas fa-sync-alt icon-bottom" />
-              </NavLink>
+              <span
+                className={`fas fa-sync-alt icon-bottom${
+                  this.state.refreshing ? ' refreshing' : ''
+                }`}
+                onClick={this.refresh}
+              />
             </div>
           </BottomBar>
         </CSSTransition>
