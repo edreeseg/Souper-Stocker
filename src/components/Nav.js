@@ -21,7 +21,7 @@ const TopBar = styled.section`
     display: flex;
     justify-content: space-around;
 
-    a {
+    a, span {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -29,6 +29,7 @@ const TopBar = styled.section`
       width: 10%;
       text-decoration: none;
       color: #eee;
+      user-select: none;
 
       &:hover {
         background: #707070;
@@ -36,6 +37,7 @@ const TopBar = styled.section`
     }
     span {
       font-size: 2rem;
+      cursor: pointer;
     }
   }
 `;
@@ -50,6 +52,7 @@ const BottomBar = styled.nav`
 
   img {
     width: 20%;
+    user-select: none;
   }
   div {
     width: 45%;
@@ -61,6 +64,7 @@ const BottomBar = styled.nav`
       text-decoration: none;
       color: #222;
       font-size: 1.8rem;
+      user-select: none;
     }
   }
 `;
@@ -78,9 +82,7 @@ class Nav extends React.Component {
             <NavLink to="/test">Test</NavLink>
             <NavLink to="/test">Test</NavLink>
             <NavLink to="/test">Sign In</NavLink>
-            <NavLink to="/test">
-              <span className="fas fa-bars" onClick={() => this.setState(prevState => ({ open: !prevState.open }))}></span>
-            </NavLink>
+            <span className="fas fa-bars" onClick={() => this.setState(prevState => ({ open: !prevState.open }))}></span>
           </div>
         </TopBar>
         {this.state.open
