@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { getKitchen } from '../redux/actions';
+import { getInventory } from '../redux/actions';
 import Item from './Item';
 
 const Inventory = styled.section`
@@ -21,17 +21,15 @@ const Inventory = styled.section`
 
 class Home extends React.Component {
   componentDidMount() {
-    if (!this.props.kitchen) this.props.getKitchen();
+    if (!this.props.inventory.length) this.props.getInventory();
   }
   render() {
     return (
       <>
         <Inventory>
-          {this.props.kitchen
-            ? this.props.kitchen.inventory.map(item => (
-                <Item key={item.item} data={item} />
-              ))
-            : null}
+          {this.props.inventory.map(item => (
+            <Item key={item.item} data={item} />
+          ))}
         </Inventory>
       </>
     );
@@ -42,10 +40,11 @@ const mapStateToProps = state => {
   return {
     userId: state.userId,
     kitchen: state.kitchen,
+    inventory: state.inventory,
   };
 };
 
 export default connect(
   mapStateToProps,
-  { getKitchen }
+  { getInventory }
 )(Home);

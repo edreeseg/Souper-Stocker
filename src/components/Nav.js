@@ -21,7 +21,8 @@ const TopBar = styled.section`
     display: flex;
     justify-content: space-around;
 
-    a, span {
+    a,
+    span {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -36,7 +37,7 @@ const TopBar = styled.section`
       }
     }
     span {
-      font-size: 2rem;
+      font-size: 2.5rem;
       cursor: pointer;
     }
   }
@@ -73,7 +74,7 @@ class Nav extends React.Component {
   state = {
     open: false,
   };
-  render(){
+  render() {
     return (
       <StyledNav>
         <TopBar>
@@ -82,26 +83,30 @@ class Nav extends React.Component {
             <NavLink to="/test">Test</NavLink>
             <NavLink to="/test">Test</NavLink>
             <NavLink to="/test">Sign In</NavLink>
-            <span className="fas fa-bars" onClick={() => this.setState(prevState => ({ open: !prevState.open }))}></span>
+            <span
+              className="fas fa-clipboard-list"
+              onClick={() =>
+                this.setState(prevState => ({ open: !prevState.open }))
+              }
+            />
           </div>
         </TopBar>
-        {this.state.open
-          ? (
-            <BottomBar>
-              <img
-                src="https://cdn.touchbistro.com/wp-content/themes/touchbistro2017/assets/images/logo.png"
-                alt="placeholder logo from example"
-              />
-              <div>
-                <NavLink to="/">HOME</NavLink>
-                <NavLink to="/add-inventory">ADD INVENTORY</NavLink>
-                <NavLink to="/test">TEST</NavLink>
-                <NavLink to="/test">TEST</NavLink>
-                <NavLink to="/test">TEST</NavLink>
-                <NavLink to="/test">TEST</NavLink>
-              </div>
-            </BottomBar>
-          ) : null }
+        {this.state.open ? (
+          <BottomBar>
+            <img
+              src="https://cdn.touchbistro.com/wp-content/themes/touchbistro2017/assets/images/logo.png"
+              alt="placeholder logo from example"
+            />
+            <div>
+              <NavLink to="/">HOME</NavLink>
+              <NavLink to="/add-inventory">ADD INVENTORY</NavLink>
+              <NavLink to="/test">TEST</NavLink>
+              <NavLink to="/test">TEST</NavLink>
+              <NavLink to="/test">TEST</NavLink>
+              <NavLink to="/test">TEST</NavLink>
+            </div>
+          </BottomBar>
+        ) : null}
       </StyledNav>
     );
   }

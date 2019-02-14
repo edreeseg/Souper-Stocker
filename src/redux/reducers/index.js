@@ -1,22 +1,27 @@
 import {
   LOADING,
-  GET_INVENTORY,
-  GET_KITCHEN_SUCCESS,
+  GET_INVENTORY_SUCCESS,
   EDIT_INVENTORY,
   LOGIN,
+  ERROR,
 } from '../actions';
 
 const initialState = {
+  error: null,
+  loading: false,
   userId: null,
   kitchen: null,
+  inventory: [],
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case LOADING:
       return { ...state, loading: true };
-    case GET_KITCHEN_SUCCESS:
-      return { ...state, kitchen: action.payload };
+    case GET_INVENTORY_SUCCESS:
+      return { ...state, loading: false, inventory: action.payload };
+    case ERROR:
+      return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }

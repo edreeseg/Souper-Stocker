@@ -1,16 +1,21 @@
+import axios from 'axios';
 import * as data from '../../dummyData';
 
 export const LOADING = 'LOADING';
-export const GET_INVENTORY = 'GET_INVENTORY';
-export const GET_KITCHEN_SUCCESS = 'GET_KITCHEN_SUCCESS';
+export const GET_INVENTORY_SUCCESS = 'GET_LOCATION_SUCCESS';
+export const ERROR = 'ERROR';
 export const EDIT_INVENTORY = 'EDIT_INVENTORY';
 export const LOGIN = 'LOGIN';
 
-export const getKitchen = id => dispatch => {
+export const getInventory = id => dispatch => {
   dispatch({ type: LOADING });
-  const kitchen = data.kitchen; // Would normally be an axios call.
-  setTimeout(
-    () => dispatch({ type: GET_KITCHEN_SUCCESS, payload: kitchen }),
-    3000
-  );
+  axios
+    .get(`http://localhost:5500/inventory/1`) // id will be dynamic based on user
+    .then(res => dispatch({ type: GET_INVENTORY_SUCCESS, payload: res.data }))
+    .catch(err =>
+      dispatch({
+        type: ERROR,
+        payload: 'There was an error while attempting to get inventory.',
+      })
+    );
 };
