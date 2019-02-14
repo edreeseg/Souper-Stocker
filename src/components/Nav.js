@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group';
 
 const StyledNav = styled.header`
   display: flex;
@@ -52,10 +53,11 @@ const TopBar = styled.section`
 `;
 
 const BottomBar = styled.nav`
+  display: none;
+  overflow: hidden;
   background-color: #ffffff;
   height: 105px;
   box-shadow: inset 0 -12px 12px -12px rgba(0, 0, 0, 0.5);
-  display: flex;
   justify-content: space-around;
   align-items: center;
 
@@ -76,6 +78,46 @@ const BottomBar = styled.nav`
       font-size: 1.8rem;
       user-select: none;
     }
+  }
+
+  /* React Transition Group Animations for Bottom Bar: */
+
+  &.tray-enter {
+    display: flex;
+    height: 0;
+
+    * {
+      opacity: 0;
+    }
+  }
+  &.tray-enter-active {
+    display: flex;
+    height: 105px;
+    transition: height 300ms ease;
+
+    * {
+      opacity: 1;
+      transition: opacity 300ms ease;
+    }
+  }
+  &.tray-enter-done {
+    display: flex;
+  }
+  &.tray-exit {
+    display: flex;
+  }
+  &.tray-exit-active {
+    height: 0;
+    display: flex;
+    transition: height 300ms ease;
+
+    * {
+      opacity: 0;
+      transition: opacity 300ms ease;
+    }
+  }
+  &.tray-exit-done {
+    display: none;
   }
 `;
 
@@ -100,7 +142,7 @@ class Nav extends React.Component {
             />
           </div>
         </TopBar>
-        {this.state.open ? (
+        <CSSTransition in={this.state.open} classNames="tray" timeout={500}>
           <BottomBar>
             <img src="https://i.imgur.com/ixE731v.jpg" alt="placeholder logo" />
             <div>
@@ -121,7 +163,7 @@ class Nav extends React.Component {
               </NavLink>
             </div>
           </BottomBar>
-        ) : null}
+        </CSSTransition>
       </StyledNav>
     );
   }
