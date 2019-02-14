@@ -2,8 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { getInventory } from '../redux/actions';
+import { getInventory, addItem } from '../redux/actions';
 import Item from './Item';
+
+const Container = styled.section`
+  width: 90%;
+  margin: 0 auto;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+`;
 
 const Inventory = styled.section`
   width: 60%;
@@ -21,16 +29,22 @@ const Inventory = styled.section`
 
 class Home extends React.Component {
   componentDidMount() {
-    if (!this.props.inventory.length) this.props.getInventory(2); // Will be the user's ID.
+    if (!this.props.inventory.length) this.props.getInventory(1); // Will be the user's ID.
   }
   render() {
     return (
       <>
-        <Inventory>
-          {this.props.inventory.map(item => (
-            <Item key={item.item} data={item} />
-          ))}
-        </Inventory>
+        <Container>
+          <section>
+            <div />
+            <div />
+          </section>
+          <Inventory>
+            {this.props.inventory.map(item => (
+              <Item key={item.item} data={item} />
+            ))}
+          </Inventory>
+        </Container>
       </>
     );
   }
@@ -46,5 +60,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getInventory }
+  { getInventory, addItem }
 )(Home);
