@@ -21,7 +21,7 @@ const Inventory = styled.section`
 
 class Home extends React.Component {
   componentDidMount() {
-    if (!this.props.inventory.length) this.props.getInventory();
+    if (!this.props.inventory.length) this.props.getInventory(2); // Will be the user's ID.
   }
   render() {
     return (

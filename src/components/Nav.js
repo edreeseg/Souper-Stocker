@@ -6,6 +6,18 @@ const StyledNav = styled.header`
   display: flex;
   flex-direction: column;
   width: 100%;
+
+  .icon-top {
+    font-size: 2.5rem;
+    cursor: pointer;
+  }
+
+  .icon-bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3.5rem;
+  }
 `;
 
 const TopBar = styled.section`
@@ -36,10 +48,6 @@ const TopBar = styled.section`
         background: #707070;
       }
     }
-    span {
-      font-size: 2.5rem;
-      cursor: pointer;
-    }
   }
 `;
 
@@ -52,8 +60,9 @@ const BottomBar = styled.nav`
   align-items: center;
 
   img {
-    width: 20%;
+    width: 35%;
     user-select: none;
+    border-radius: 20px;
   }
   div {
     width: 45%;
@@ -84,7 +93,7 @@ class Nav extends React.Component {
             <NavLink to="/test">Test</NavLink>
             <NavLink to="/test">Sign In</NavLink>
             <span
-              className="fas fa-clipboard-list"
+              className="fas fa-clipboard-list icon-top"
               onClick={() =>
                 this.setState(prevState => ({ open: !prevState.open }))
               }
@@ -93,17 +102,23 @@ class Nav extends React.Component {
         </TopBar>
         {this.state.open ? (
           <BottomBar>
-            <img
-              src="https://cdn.touchbistro.com/wp-content/themes/touchbistro2017/assets/images/logo.png"
-              alt="placeholder logo from example"
-            />
+            <img src="https://i.imgur.com/ixE731v.jpg" alt="placeholder logo" />
             <div>
-              <NavLink to="/">HOME</NavLink>
-              <NavLink to="/add-inventory">ADD INVENTORY</NavLink>
-              <NavLink to="/test">TEST</NavLink>
-              <NavLink to="/test">TEST</NavLink>
-              <NavLink to="/test">TEST</NavLink>
-              <NavLink to="/test">TEST</NavLink>
+              <NavLink to="/">
+                <span className="fas fa-home icon-bottom" />
+              </NavLink>
+              <NavLink to="/add-inventory">
+                <span className="far fa-plus-square icon-bottom" />
+              </NavLink>
+              <NavLink to="/test">
+                <span className="far fa-edit icon-bottom" />
+              </NavLink>
+              <NavLink to="/test">
+                <span className="far fa-minus-square icon-bottom" />
+              </NavLink>
+              <NavLink to="/test">
+                <span className="fas fa-sync-alt icon-bottom" />
+              </NavLink>
             </div>
           </BottomBar>
         ) : null}
