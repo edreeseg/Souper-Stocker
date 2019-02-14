@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
+
+import { getInventory } from '../redux/actions';
 
 const StyledNav = styled.header`
   display: flex;
@@ -213,4 +216,18 @@ class Nav extends React.Component {
     );
   }
 }
-export default Nav;
+
+const mapStateToProps = state => {
+  return {
+    userId: state.userId,
+    error: state.error,
+  };
+};
+
+export default connect(
+  // Must be written this way so React-Redux plays nice with React-Router.
+  mapStateToProps,
+  { getInventory },
+  null,
+  { pure: false }
+)(Nav);
