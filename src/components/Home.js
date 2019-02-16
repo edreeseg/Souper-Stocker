@@ -25,6 +25,7 @@ const InvPanel = styled.div`
   border: 1px solid black;
 `;
 
+//test
 // name, title, username, password, role_id, loc_id - user schema
 
 class Home extends React.Component {
