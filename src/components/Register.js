@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { register } from '../redux/actions';
+import { register, login } from '../redux/actions';
 import styled from 'styled-components';
 
-class Register extends React.Component {
+class Authentication extends React.Component {
+  // Both Login and Register functionality
   state = {
     name: '',
     title: '',
@@ -109,4 +110,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { register }
-)(Register);
+)(Authentication);
