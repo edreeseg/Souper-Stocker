@@ -16,7 +16,7 @@ const Container = styled.section`
 const Inventory = styled.section`
   width: 80%;
   margin: 10px auto;
-  display: flex;  
+  display: flex;
 `;
 
 const InvPanel = styled.div`
@@ -24,7 +24,6 @@ const InvPanel = styled.div`
   height: 50vh;
   border: 1px solid black;
 `;
-
 
 // name, title, username, password, role_id, loc_id - user schema
 
@@ -34,11 +33,9 @@ class Home extends React.Component {
   }
   render() {
     return (
-        <Container>
-          <Inventory>
-            
-          </Inventory>
-        </Container>
+      <Container>
+        <Inventory />
+      </Container>
     );
   }
 }
