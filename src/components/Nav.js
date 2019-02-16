@@ -72,7 +72,8 @@ const BottomBar = styled.nav`
   align-items: center;
 
   img {
-    width: 35%;
+    height: 80%;
+    min-height: 88px;
     user-select: none;
     border-radius: 20px;
   }

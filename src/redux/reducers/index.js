@@ -1,16 +1,20 @@
 import {
   LOADING,
+  REGISTRATION_SUCCESS,
+  LOGIN_SUCCESS,
   GET_INVENTORY_SUCCESS,
   EDIT_INVENTORY,
   ADD_ITEM_SUCCESS,
   LOGIN,
+  REGISTER,
   ERROR,
 } from '../actions';
 
 const initialState = {
+  user: null,
+  token: null,
   error: null,
   loading: false,
-  userId: null,
   kitchen: null,
   inventory: [],
 };
@@ -19,12 +23,38 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case LOADING:
       return { ...state, loading: true };
-    case GET_INVENTORY_SUCCESS:
-      return { ...state, loading: false, inventory: action.payload };
-    case ADD_ITEM_SUCCESS:
-      return { ...state, loading: false, inventory: action.payload };
     case ERROR:
       return { ...state, loading: false, error: action.payload };
+    case REGISTRATION_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        user: action.payload,
+        token: action.payload.token,
+        error: null,
+      };
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        user: action.payload,
+        token: action.payload.token,
+        error: null,
+      };
+    case GET_INVENTORY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        inventory: action.payload,
+        error: null,
+      };
+    case ADD_ITEM_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        inventory: action.payload,
+        error: null,
+      };
     default:
       return state;
   }

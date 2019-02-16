@@ -1,9 +1,13 @@
 import axios from 'axios';
 
 export const LOADING = 'LOADING';
-export const GET_INVENTORY_SUCCESS = 'GET_LOCATION_SUCCESS';
-export const ADD_ITEM_SUCCESS = 'ADD_ITEM_SUCCESS';
 export const ERROR = 'ERROR';
+
+export { REGISTRATION_SUCCESS, LOGIN_SUCCESS } from './users';
+export { register, login } from './users';
+
+export const ADD_ITEM_SUCCESS = 'ADD_ITEM_SUCCESS';
+export const GET_INVENTORY_SUCCESS = 'GET_LOCATION_SUCCESS';
 export const EDIT_INVENTORY = 'EDIT_INVENTORY';
 export const LOGIN = 'LOGIN';
 

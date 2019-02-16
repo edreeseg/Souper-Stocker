@@ -14,18 +14,19 @@ const Container = styled.section`
 `;
 
 const Inventory = styled.section`
-  width: 60%;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-
-  div {
-    width: 40%;
-    margin-bottom: 20px;
-    border: 1px solid black;
-  }
+  width: 80%;
+  margin: 10px auto;
+  display: flex;  
 `;
+
+const InvPanel = styled.div`
+  width: 50%;
+  height: 50vh;
+  border: 1px solid black;
+`;
+
+
+// name, title, username, password, role_id, loc_id - user schema
 
 class Home extends React.Component {
   componentDidMount() {
@@ -33,19 +34,11 @@ class Home extends React.Component {
   }
   render() {
     return (
-      <>
         <Container>
-          <section>
-            <div />
-            <div />
-          </section>
           <Inventory>
-            {this.props.inventory.map(item => (
-              <Item key={item.item} data={item} />
-            ))}
+            
           </Inventory>
         </Container>
-      </>
     );
   }
 }
