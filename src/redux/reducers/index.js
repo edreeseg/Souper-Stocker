@@ -1,13 +1,11 @@
 import {
   LOADING,
+  ERROR,
   REGISTRATION_SUCCESS,
   LOGIN_SUCCESS,
   GET_INVENTORY_SUCCESS,
   EDIT_INVENTORY,
   ADD_ITEM_SUCCESS,
-  LOGIN,
-  REGISTER,
-  ERROR,
 } from '../actions';
 
 const initialState = {
@@ -17,6 +15,7 @@ const initialState = {
   loading: false,
   kitchen: null,
   inventory: [],
+  categories: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -46,6 +45,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         inventory: action.payload,
+        categories: Array.from(new Set(action.payload.map(x => x.category_id))),
         error: null,
       };
     case ADD_ITEM_SUCCESS:
@@ -53,6 +53,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         inventory: action.payload,
+        categories: Array.from(new Set(action.payload.map(x => x.category_id))),
         error: null,
       };
     default:

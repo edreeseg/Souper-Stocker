@@ -161,7 +161,11 @@ class Nav extends React.Component {
   }
   refresh = () => {
     this.setState({ refreshing: true });
-    setTimeout(() => this.setState({ refreshing: false }), 3000); // Would likely be an AJAX call
+    this.props.getInventory(this.props.user);
+    this.refreshTimer = window.setInterval(() => {
+      if (!this.props.loading) this.setState({ refreshing: false });
+      window.clearInterval(this.refreshTimer);
+    }, 100);
   };
   render() {
     return (
@@ -220,8 +224,9 @@ class Nav extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    userId: state.userId,
+    user: state.user,
     error: state.error,
+    loading: state.loading,
   };
 };
 

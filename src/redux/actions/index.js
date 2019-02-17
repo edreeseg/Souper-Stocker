@@ -7,14 +7,20 @@ export { REGISTRATION_SUCCESS, LOGIN_SUCCESS } from './users';
 export { register, login } from './users';
 
 export const ADD_ITEM_SUCCESS = 'ADD_ITEM_SUCCESS';
-export const GET_INVENTORY_SUCCESS = 'GET_LOCATION_SUCCESS';
+export const GET_INVENTORY_SUCCESS = 'GET_INVENTORY_SUCCESS';
 export const EDIT_INVENTORY = 'EDIT_INVENTORY';
 export const LOGIN = 'LOGIN';
 
-export const getInventory = id => dispatch => {
+export const getInventory = user => dispatch => {
   dispatch({ type: LOADING });
+  const config = {
+    headers: {
+      Authorization: user.token,
+      role: user.role,
+    },
+  };
   axios
-    .get(`http://localhost:5500/inventory/${id}`) // id will be dynamic based on user
+    .get(`http://localhost:5500/inventory/${user.location}`, config)
     .then(res => dispatch({ type: GET_INVENTORY_SUCCESS, payload: res.data }))
     .catch(err =>
       dispatch({

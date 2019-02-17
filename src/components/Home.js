@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import Inventory from './Inventory';
 
 import { getInventory, addItem } from '../redux/actions';
-import Item from './Item';
 
 const Container = styled.section`
   width: 90%;
@@ -13,29 +13,21 @@ const Container = styled.section`
   flex-direction: column;
 `;
 
-const Inventory = styled.section`
-  width: 80%;
-  margin: 10px auto;
-  display: flex;
-`;
-
-const InvPanel = styled.div`
-  width: 50%;
-  height: 50vh;
-  border: 1px solid black;
-`;
-
-//test
 // name, title, username, password, role_id, loc_id - user schema
 
 class Home extends React.Component {
   componentDidMount() {
-    if (!this.props.inventory.length) this.props.getInventory(1); // Will be the user's ID.
+    if (this.props.user === null) return this.props.history.push('/auth');
+    if (!this.props.inventory.length)
+      return this.props.getInventory(this.props.user);
   }
   render() {
     return (
       <Container>
-        <Inventory />
+        <Inventory
+          categories={this.props.categories}
+          inventory={this.props.inventory}
+        />
       </Container>
     );
   }
@@ -43,9 +35,10 @@ class Home extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    userId: state.userId,
-    kitchen: state.kitchen,
+    user: state.user,
+    token: state.token,
     inventory: state.inventory,
+    categories: state.categories,
   };
 };
 

@@ -7,16 +7,15 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 
 export const register = object => dispatch => {
   dispatch({ type: LOADING });
-  const { name, title, username, password, role_id, loc_id } = object;
-  console.log(role_id);
-  if (!name || !title || !username || !password || role_id === null)
+  const { name, title, username, password, email, role_id, loc_id } = object;
+  if (!name || !title || !username || !password || !email || role_id === null)
     return dispatch({
       type: ERROR,
       payload:
-        'Registration request must include name, title, username, password, and role_id keys.',
+        'Registration request must include name, title, username, password, email, and role_id keys.',
     });
-  const user = { name, title, username, password, role_id };
-  if (object.loc_id) user.loc_id = object.loc_id;
+  const user = { name, title, username, password, email, role_id };
+  if (loc_id) user.loc_id = loc_id;
   axios
     .post('http://localhost:5500/users/register', user)
     .then(res => dispatch({ type: REGISTRATION_SUCCESS, payload: res.data }))
