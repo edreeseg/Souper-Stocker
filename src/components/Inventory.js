@@ -16,15 +16,6 @@ const StyledInventory = styled.section`
   flex-wrap: wrap;
   position: relative;
 
-  h1 {
-    font-size: 4rem;
-    font-weight: 700;
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
   span {
     position: absolute;
     top: 10px;
@@ -40,19 +31,30 @@ const StyledInventory = styled.section`
 
   &.out-enter {
     * {
-      transform: scale(1, 1) rotateX(0);
+      transform: rotateX(0);
+      transform-origin: top;
     }
   }
   &.out-enter-active {
     * {
-      transform: scale(0.5, 0.5) rotateX(-360deg);
-      transition: transform 0.5s linear;
+      transform: rotateX(-90deg);
+      transform-origin: top;
+      transition: transform 0.4s ease;
     }
   }
   &.out-enter-done {
     * {
-      transform: scale(0, 0) rotateX(-360deg);
+      transform: rotateX(-90deg);
+      transform-origin: top;
     }
+  }
+  .title {
+    font-size: 4rem;
+    font-weight: 700;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 `;
 
@@ -89,19 +91,19 @@ class Inventory extends React.Component {
     this.setState({ changing: true });
     setTimeout(() => {
       this.setState({ current: category, changing: false });
-    }, 500);
+    }, 400);
   };
   render() {
     return (
-      <CSSTransition in={this.state.changing} timeout={500} classNames="out">
+      <CSSTransition in={this.state.changing} timeout={400} classNames="out">
         <StyledInventory>
+          <h1 className="title">{this.state.current || 'Categories'}</h1>
           {this.state.current ? (
             <>
               <span
                 className="fas fa-undo-alt"
                 onClick={e => this.setState({ current: null })}
               />
-              <h1>{this.state.current}</h1>
               {this.props.inventory
                 .filter(x => x.category_id === this.state.current)
                 .map(x => (

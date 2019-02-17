@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
-import { getInventory } from '../redux/actions';
+import { getInventory, setOperation } from '../redux/actions';
 
 const StyledNav = styled.header`
   display: flex;
@@ -28,8 +27,14 @@ const TopBar = styled.section`
   background-color: #464646;
   height: 45px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: ${props => (props.loggedIn ? 'space-between' : 'flex-end')};
   align-items: center;
+
+  h2 {
+    color: #eee;
+    font-size: 1.8rem;
+    margin-left: 10px;
+  }
 
   div {
     height: 100%;
@@ -83,21 +88,9 @@ const BottomBar = styled.nav`
     justify-content: space-between;
     align-items: center;
 
-    a,
-    .icon-bottom {
-      text-decoration: none;
-      color: #222;
-      user-select: none;
-      cursor: pointer;
-
-      &.bottom-active {
-        .icon-bottom {
-          font-size: 4rem;
-        }
-      }
-    }
     .refreshing {
       animation: spin 0.75s linear 0s infinite;
+      color: #3aa74c;
     }
 
     @keyframes spin {
@@ -151,6 +144,13 @@ const BottomBar = styled.nav`
   }
 `;
 
+const Icon = styled.span`
+  text-decoration: none;
+  color: ${props => (props.name === props.current ? '#3AA74C' : '#222')};
+  user-select: none;
+  cursor: pointer;
+`;
+
 class Nav extends React.Component {
   constructor(props) {
     super(props);
@@ -159,6 +159,10 @@ class Nav extends React.Component {
       refreshing: false,
     };
   }
+  handleOperationChange = e => {
+    const name = e.target.getAttribute('name');
+    this.props.setOperation(name === this.props.currentOperation ? null : name);
+  };
   refresh = () => {
     this.setState({ refreshing: true });
     this.props.getInventory(this.props.user);
@@ -170,20 +174,13 @@ class Nav extends React.Component {
   render() {
     return (
       <StyledNav>
-        <TopBar open={this.state.open}>
+        <TopBar open={this.state.open} loggedIn={this.props.user}>
+          {this.props.user ? <h2>Welcome, {this.props.user.name}!</h2> : null}
           <div>
-            <NavLink to="/1" activeClassName="top-active">
-              Test
-            </NavLink>
-            <NavLink to="/2" activeClassName="top-active">
-              Test
-            </NavLink>
-            <NavLink to="/3" activeClassName="top-active">
-              Test
-            </NavLink>
-            <NavLink to="/4" activeClassName="top-active">
-              Sign In
-            </NavLink>
+            <a href="/1">Test</a>
+            <a href="/2">Test</a>
+            <a href="/3">Test</a>
+            <a href="/4">Sign In</a>
             <span
               className="fas fa-clipboard-list icon-top"
               onClick={() =>
@@ -196,22 +193,36 @@ class Nav extends React.Component {
           <BottomBar>
             <img src="https://i.imgur.com/ixE731v.jpg" alt="placeholder logo" />
             <div>
-              <NavLink to="/" exact activeClassName="bottom-active">
-                <span className="fas fa-home icon-bottom" />
-              </NavLink>
-              <NavLink to="/add-item" activeClassName="bottom-active">
-                <span className="far fa-plus-square icon-bottom" />
-              </NavLink>
-              <NavLink to="/modify-item" activeClassName="bottom-active">
-                <span className="far fa-edit icon-bottom" />
-              </NavLink>
-              <NavLink to="/delete-item" activeClassName="bottom-active">
-                <span className="far fa-minus-square icon-bottom" />
-              </NavLink>
-              <span
+              <Icon
+                className="fas fa-home icon-bottom"
+                name={null}
+                current={this.props.currentOperation}
+                onClick={this.handleOperationChange}
+              />
+              <Icon
+                className="far fa-plus-square icon-bottom"
+                name="POST"
+                current={this.props.currentOperation}
+                onClick={this.handleOperationChange}
+              />
+              <Icon
+                className="far fa-edit icon-bottom"
+                name="PUT"
+                current={this.props.currentOperation}
+                onClick={this.handleOperationChange}
+              />
+              <Icon
+                className="far fa-minus-square icon-bottom"
+                name="DELETE"
+                current={this.props.currentOperation}
+                onClick={this.handleOperationChange}
+              />
+              <Icon
                 className={`fas fa-sync-alt icon-bottom${
                   this.state.refreshing ? ' refreshing' : ''
                 }`}
+                name="GET"
+                current={this.props.currentOperation}
                 onClick={this.refresh}
               />
             </div>
@@ -227,13 +238,14 @@ const mapStateToProps = state => {
     user: state.user,
     error: state.error,
     loading: state.loading,
+    currentOperation: state.currentOperation,
   };
 };
 
 export default connect(
   // Must be written this way so React-Redux plays nice with React-Router.
   mapStateToProps,
-  { getInventory },
+  { getInventory, setOperation },
   null,
   { pure: false }
 )(Nav);

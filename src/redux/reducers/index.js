@@ -3,6 +3,7 @@ import {
   ERROR,
   REGISTRATION_SUCCESS,
   LOGIN_SUCCESS,
+  SET_OPERATION,
   GET_INVENTORY_SUCCESS,
   EDIT_INVENTORY,
   ADD_ITEM_SUCCESS,
@@ -16,6 +17,7 @@ const initialState = {
   kitchen: null,
   inventory: [],
   categories: [],
+  currentOperation: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -40,6 +42,8 @@ const reducer = (state = initialState, action) => {
         token: action.payload.token,
         error: null,
       };
+    case SET_OPERATION:
+      return { ...state, error: null, currentOperation: action.payload };
     case GET_INVENTORY_SUCCESS:
       return {
         ...state,

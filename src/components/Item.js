@@ -23,25 +23,37 @@ const ItemCard = styled.div`
 
   h2 {
     font-size: 3rem;
+    color: ${props => (props.low ? '#D72B44' : '#3AA74C')};
+  }
+  p {
+    font-weight: 300;
+  }
+  img {
+    height: 100px;
+    margin: 10px 0;
   }
 
   /* React-Transition-Group Styles */
 
   &.in-appear {
-    transform: scale(0, 0) rotateX(-360deg);
+    transform: rotateX(-90deg);
+    transform-origin: top;
   }
   &.in-appear-active {
-    transform: scale(1, 1) rotateX(0deg);
-    transition: transform 0.5s linear;
+    transform: rotateX(0deg);
+    transform-origin: top;
+    transition: transform 0.4s ease;
   }
   &.in-enter-done {
-    transform: scale(1, 1) rotateX(0deg);
+    transform: rotateX(0deg)
+    transform-origin: top;;
   }
 `;
 
 const Item = props => (
-  <CSSTransition in={true} timeout={500} classNames="in" appear={true}>
-    <ItemCard>
+  <CSSTransition in={true} timeout={400} classNames="in" appear={true}>
+    <ItemCard low={props.data.min_quan > props.data.amount ? 1 : 0}>
+      {/* The above is to avoid React Router error */}
       <h2>
         {props.data.item.charAt(0).toUpperCase() + props.data.item.slice(1)}
       </h2>

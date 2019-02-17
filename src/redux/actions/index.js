@@ -6,6 +6,7 @@ export const ERROR = 'ERROR';
 export { REGISTRATION_SUCCESS, LOGIN_SUCCESS } from './users';
 export { register, login } from './users';
 
+export const SET_OPERATION = 'SET_OPERATION';
 export const ADD_ITEM_SUCCESS = 'ADD_ITEM_SUCCESS';
 export const GET_INVENTORY_SUCCESS = 'GET_INVENTORY_SUCCESS';
 export const EDIT_INVENTORY = 'EDIT_INVENTORY';
@@ -53,4 +54,8 @@ export const addItem = (id, obj) => dispatch => {
           : 'There was an error while attempting to add item.',
       })
     );
+};
+
+export const setOperation = operation => dispatch => {
+  dispatch({ type: SET_OPERATION, payload: operation });
 };
