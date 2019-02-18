@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { register, login } from '../redux/actions';
-import styled from 'styled-components';
 
 class Authentication extends React.Component {
   // Both Login and Register functionality

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
 import { getInventory, setOperation } from '../redux/actions';
@@ -75,6 +76,10 @@ const BottomBar = styled.nav`
   box-shadow: inset 0 -12px 12px -12px rgba(0, 0, 0, 0.5);
   justify-content: space-around;
   align-items: center;
+
+  a {
+    text-decoration: none;
+  }
 
   img {
     height: 80%;
@@ -193,18 +198,22 @@ class Nav extends React.Component {
           <BottomBar>
             <img src="https://i.imgur.com/ixE731v.jpg" alt="placeholder logo" />
             <div>
-              <Icon
-                className="fas fa-home icon-bottom"
-                name={null}
-                current={this.props.currentOperation}
-                onClick={this.handleOperationChange}
-              />
-              <Icon
-                className="far fa-plus-square icon-bottom"
-                name="POST"
-                current={this.props.currentOperation}
-                onClick={this.handleOperationChange}
-              />
+              <Link to="/">
+                <Icon
+                  className="fas fa-home icon-bottom"
+                  name={null}
+                  current={this.props.currentOperation}
+                  onClick={this.handleOperationChange}
+                />
+              </Link>
+              <Link to="/add-item">
+                <Icon
+                  className="far fa-plus-square icon-bottom"
+                  name="POST"
+                  current={this.props.currentOperation}
+                  onClick={this.handleOperationChange}
+                />
+              </Link>
               <Icon
                 className="far fa-edit icon-bottom"
                 name="PUT"

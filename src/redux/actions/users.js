@@ -4,6 +4,7 @@ export const LOADING = 'LOADING';
 export const ERROR = 'ERROR';
 export const REGISTRATION_SUCCESS = 'REGISTRATION_SUCCESS';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
 
 export const register = object => dispatch => {
   dispatch({ type: LOADING });
@@ -34,6 +35,21 @@ export const login = user => dispatch => {
   axios
     .post('http://localhost:5500/users/login', user)
     .then(res => dispatch({ type: LOGIN_SUCCESS, payload: res.data }))
+    .catch(err =>
+      dispatch({
+        type: ERROR,
+        payload: err.response
+          ? err.response.data.message
+          : 'There was an error while attempting to get inventory.',
+      })
+    );
+};
+
+export const deleteUser = id => dispatch => {
+  dispatch({ type: LOADING });
+  axios
+    .delete(`http://localhost:5500/${id}`)
+    .then(res => dispatch({ type: DELETE_USER_SUCCESS, payload: res.data })) // Returns number of deleted items - need to test?
     .catch(err =>
       dispatch({
         type: ERROR,

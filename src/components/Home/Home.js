@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Inventory from './Inventory';
 
-import { getInventory, addItem } from '../redux/actions';
+import { getInventory, addItem } from '../../redux/actions';
 
 const Container = styled.section`
   width: 90%;
