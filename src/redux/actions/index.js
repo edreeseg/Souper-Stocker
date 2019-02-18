@@ -9,7 +9,7 @@ export { register, login } from './users';
 export const SET_OPERATION = 'SET_OPERATION';
 export const ADD_ITEM_SUCCESS = 'ADD_ITEM_SUCCESS';
 export const GET_INVENTORY_SUCCESS = 'GET_INVENTORY_SUCCESS';
-export const EDIT_INVENTORY = 'EDIT_INVENTORY';
+export const DELETE_ITEM_SUCCESS = 'DELETE_ITEM_SUCCESS';
 export const LOGIN = 'LOGIN';
 
 export const getInventory = user => dispatch => {
@@ -58,4 +58,18 @@ export const addItem = (id, obj) => dispatch => {
 
 export const setOperation = operation => dispatch => {
   dispatch({ type: SET_OPERATION, payload: operation });
+};
+export const deleteItem = id => dispatch => {
+  dispatch({ type: LOADING });
+  axios
+    .delete(`http://localhost:5500/${id}`)
+    .then(res => dispatch({ type: DELETE_ITEM_SUCCESS, payload: res.data }))
+    .catch(err =>
+      dispatch({
+        type: ERROR,
+        payload: err.response
+          ? err.response.data.message
+          : 'There was an error while attempting to add item.',
+      })
+    );
 };

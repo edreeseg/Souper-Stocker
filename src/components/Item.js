@@ -50,28 +50,50 @@ const ItemCard = styled.div`
   }
 `;
 
-const Item = props => (
-  <CSSTransition in={true} timeout={400} classNames="in" appear={true}>
-    <ItemCard low={props.data.min_quan > props.data.amount ? 1 : 0}>
-      {/* The above is to avoid React Router error */}
-      <h2>
-        {props.data.item.charAt(0).toUpperCase() + props.data.item.slice(1)}
-      </h2>
-      <img
-        src={
-          props.data.amount > props.data.min_quan
-            ? props.data.color_img
-            : props.data.bw_img
-        }
-        alt={props.data.item}
-      />
-      <p>Quantity: {props.data.amount}</p>
-      <p>
-        Unit:{' '}
-        {props.data.unit.charAt(0).toUpperCase() + props.data.unit.slice(1)}
-      </p>
-    </ItemCard>
-  </CSSTransition>
-);
+class Item extends React.Component {
+  state = {
+    editing: false,
+  };
+  handleClick = e => {
+    switch (this.props.currentOperation) {
+      case 'PUT':
+        return this.setState({ editing: true });
+      case 'DELETE':
+        return this.props.deleteItem(this.props.data.id);
+      default:
+        return;
+    }
+  };
+  render() {
+    return (
+      <CSSTransition in={true} timeout={400} classNames="in" appear={true}>
+        <ItemCard
+          low={this.props.data.min_quan > this.props.data.amount ? 1 : 0}
+          onClick={this.handleClick}
+        >
+          {/* The above is to avoid React Router error */}
+          <h2>
+            {this.props.data.item.charAt(0).toUpperCase() +
+              this.props.data.item.slice(1)}
+          </h2>
+          <img
+            src={
+              this.props.data.amount > this.props.data.min_quan
+                ? this.props.data.color_img
+                : this.props.data.bw_img
+            }
+            alt={this.props.data.item}
+          />
+          <p>Quantity: {this.props.data.amount}</p>
+          <p>
+            Unit:{' '}
+            {this.props.data.unit.charAt(0).toUpperCase() +
+              this.props.data.unit.slice(1)}
+          </p>
+        </ItemCard>
+      </CSSTransition>
+    );
+  }
+}
 
 export default Item;

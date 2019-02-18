@@ -5,7 +5,7 @@ import {
   LOGIN_SUCCESS,
   SET_OPERATION,
   GET_INVENTORY_SUCCESS,
-  EDIT_INVENTORY,
+  DELETE_ITEM_SUCCESS,
   ADD_ITEM_SUCCESS,
 } from '../actions';
 
@@ -53,6 +53,14 @@ const reducer = (state = initialState, action) => {
         error: null,
       };
     case ADD_ITEM_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        inventory: action.payload,
+        categories: Array.from(new Set(action.payload.map(x => x.category_id))),
+        error: null,
+      };
+    case DELETE_ITEM_SUCCESS:
       return {
         ...state,
         loading: false,
