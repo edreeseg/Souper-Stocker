@@ -195,7 +195,9 @@ class Nav extends React.Component {
       <StyledNav>
         <TopBar open={this.state.open} loggedIn={this.props.user}>
           <div className="logo-container">
-            <img src={logo} alt="soup logo" />
+            <Link to="/">
+              <img src={logo} alt="soup logo" />
+            </Link>
             {this.props.user ? <h2>Welcome, {this.props.user.name}!</h2> : null}
           </div>
           <div>
@@ -206,7 +208,9 @@ class Nav extends React.Component {
             <span
               className="fas fa-clipboard-list icon-top"
               onClick={() =>
-                this.setState(prevState => ({ open: !prevState.open }))
+                this.props.user
+                  ? this.setState(prevState => ({ open: !prevState.open }))
+                  : null
               }
             />
           </div>
