@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
+import logo from '../assets/soup.svg';
 import { getInventory, setOperation } from '../redux/actions';
 
 const StyledNav = styled.header`
@@ -28,7 +29,7 @@ const TopBar = styled.section`
   background-color: #464646;
   height: 45px;
   display: flex;
-  justify-content: ${props => (props.loggedIn ? 'space-between' : 'flex-end')};
+  justify-content: space-between;
   align-items: center;
 
   h2 {
@@ -64,6 +65,19 @@ const TopBar = styled.section`
     }
     span {
       background: ${props => (props.open ? '#707070' : 'transparent')};
+    }
+  }
+
+  .logo-container {
+    display: flex;
+    justify-content: ${props =>
+      props.loggedIn ? 'space-between' : 'flex-start'};
+    align-items: center;
+    width: 40%;
+    padding: 0 20px;
+
+    img {
+      height: 90%;
     }
   }
 `;
@@ -180,7 +194,10 @@ class Nav extends React.Component {
     return (
       <StyledNav>
         <TopBar open={this.state.open} loggedIn={this.props.user}>
-          {this.props.user ? <h2>Welcome, {this.props.user.name}!</h2> : null}
+          <div className="logo-container">
+            <img src={logo} alt="soup logo" />
+            {this.props.user ? <h2>Welcome, {this.props.user.name}!</h2> : null}
+          </div>
           <div>
             <a href="/1">Test</a>
             <a href="/2">Test</a>

@@ -1,6 +1,45 @@
 import React from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { register, login } from '../redux/actions';
+
+const AuthForm = styled.form`
+  position: absolute;
+  top: 50%;
+  height: 50%;
+  transform: translateY(-50%);
+  margin: 0 auto;
+  width: 100%;
+  background: rgba(8, 43, 50, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  > * {
+    margin-bottom: 4px;
+  }
+
+  p {
+    color: #dfdfdf;
+    user-select: none;
+
+    span {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+`;
+
+const FormBackground = styled.div`
+  position: relative;
+  width: 100%;
+
+  img {
+    width: 100%;
+    user-select: none;
+  }
+`;
 
 class Authentication extends React.Component {
   // Both Login and Register functionality
@@ -83,8 +122,9 @@ class Authentication extends React.Component {
   };
   render() {
     return this.state.registering ? (
-      <>
-        <form onSubmit={this.handleRegister}>
+      <FormBackground>
+        <img src="https://i.imgur.com/cjQP0CZ.jpg" alt="cityscape background" />
+        <AuthForm onSubmit={this.handleRegister}>
           <input
             type="text"
             placeholder="Full Name"
@@ -135,12 +175,20 @@ class Authentication extends React.Component {
             value={this.state.loc_id}
           />
           <button>Submit</button>
-        </form>
-        <button onClick={this.handleTransition}>Login</button>
-      </>
+          <p>
+            Already have an account with us?{' '}
+            <span onClick={this.handleTransition}>Log in!</span>
+          </p>
+        </AuthForm>
+      </FormBackground>
     ) : (
-      <>
-        <form onSubmit={this.handleLogin}>
+      <FormBackground>
+        <img
+          src="https://i.imgur.com/cjQP0CZ.jpg"
+          alt="cityscape background"
+          draggable={false}
+        />
+        <AuthForm onSubmit={this.handleLogin}>
           <input
             type="text"
             placeholder="Username"
@@ -156,9 +204,12 @@ class Authentication extends React.Component {
             value={this.state.password}
           />
           <button>Login</button>
-        </form>
-        <button onClick={this.handleTransition}>Register</button>
-      </>
+          <p>
+            Don't have an account?{' '}
+            <span onClick={this.handleTransition}>Sign up!</span>
+          </p>
+        </AuthForm>
+      </FormBackground>
     );
   }
 }

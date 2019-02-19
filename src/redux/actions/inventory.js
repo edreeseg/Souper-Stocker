@@ -17,7 +17,10 @@ export const getInventory = user => dispatch => {
     },
   };
   axios
-    .get(`http://localhost:5500/inventory/${user.location}`, config)
+    .get(
+      `https://soup-back-end-2.herokuapp.com/inventory/${user.location}`,
+      config
+    )
     .then(res => dispatch({ type: GET_INVENTORY_SUCCESS, payload: res.data }))
     .catch(err =>
       dispatch({
@@ -29,20 +32,49 @@ export const getInventory = user => dispatch => {
     );
 };
 
-export const addItem = (id, obj) => dispatch => {
+export const addItem = (obj, user) => dispatch => {
   dispatch({ type: LOADING });
-  const { item, amount, unit, category_id, location_id } = obj;
-  if (!item || !amount || !unit || !category_id || !location_id)
-    // color_img and bw_img required attributes?
+  const config = {
+    headers: {
+      Authorization: user.token,
+      role: user.role,
+    },
+  };
+  const { item, amount, unit, min_quan, bw_img, color_img, category_id } = obj;
+  const location_id = user.location;
+  if (
+    !item ||
+    !amount ||
+    !unit ||
+    !min_quan ||
+    !bw_img ||
+    !color_img ||
+    !category_id ||
+    !location_id
+  )
+    // color_img and bw_img required attributes?  Default value?
     return dispatch({
       type: ERROR,
       payload:
-        'Items must include name, amount, unit, category_id, and location_id keys.',
+        'Items must include name, amount, unit, min_quan, and category_id keys.',
     });
-  const newItem = { item, amount, unit, category_id, location_id };
+  const newItem = {
+    item,
+    amount,
+    unit,
+    min_quan,
+    bw_img,
+    color_img,
+    category_id,
+    location_id,
+  };
   axios
-    .post(`http://localhost:5500/inventory`, newItem)
-    .then(res => dispatch({ type: ADD_ITEM_SUCCESS, payload: res.data }))
+    .post(
+      `https://soup-back-end-2.herokuapp.com/inventory/${location_id}`,
+      newItem,
+      config
+    )
+    .then(res => dispatch({ type: ADD_ITEM_SUCCESS, payload: res.data[0] })) // Returns an array of one on success.
     .catch(err =>
       dispatch({
         type: ERROR,
@@ -66,7 +98,7 @@ export const deleteItem = (id, user) => dispatch => {
     },
   };
   axios
-    .delete(`http://localhost:5500/inventory/${id}`, config)
+    .delete(`https://soup-back-end-2.herokuapp.com/inventory/${id}`, config)
     .then(res => dispatch({ type: DELETE_ITEM_SUCCESS, payload: id }))
     .catch(err =>
       dispatch({
@@ -91,7 +123,11 @@ export const updateItem = (id, changes, user) => dispatch => {
     },
   };
   axios
-    .put(`http://localhost:5500/inventory/${id}`, newItem, config)
+    .put(
+      `https://soup-back-end-2.herokuapp.com/inventory/${id}`,
+      newItem,
+      config
+    )
     .then(res => dispatch({ type: UPDATE_ITEM_SUCCESS, payload: res.data }))
     .catch(err =>
       dispatch({

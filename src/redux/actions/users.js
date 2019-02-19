@@ -18,7 +18,7 @@ export const register = object => dispatch => {
   const user = { name, title, username, password, email, role_id };
   if (loc_id) user.loc_id = loc_id;
   axios
-    .post('http://localhost:5500/users/register', user)
+    .post('https://soup-back-end-2.herokuapp.com/users/register', user)
     .then(res => dispatch({ type: REGISTRATION_SUCCESS, payload: res.data }))
     .catch(err =>
       dispatch({
@@ -33,7 +33,7 @@ export const register = object => dispatch => {
 export const login = user => dispatch => {
   dispatch({ type: LOADING });
   axios
-    .post('http://localhost:5500/users/login', user)
+    .post('https://soup-back-end-2.herokuapp.com/users/login', user)
     .then(res => dispatch({ type: LOGIN_SUCCESS, payload: res.data }))
     .catch(err =>
       dispatch({
@@ -48,7 +48,7 @@ export const login = user => dispatch => {
 export const deleteUser = id => dispatch => {
   dispatch({ type: LOADING });
   axios
-    .delete(`http://localhost:5500/${id}`)
+    .delete(`https://soup-back-end-2.herokuapp.com/${id}`)
     .then(res => dispatch({ type: DELETE_USER_SUCCESS, payload: res.data })) // Returns number of deleted items - need to test?
     .catch(err =>
       dispatch({

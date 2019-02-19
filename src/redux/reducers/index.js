@@ -56,40 +56,42 @@ const reducer = (state = initialState, action) => {
         ),
         error: null,
       };
-    case ADD_ITEM_SUCCESS:
+    case ADD_ITEM_SUCCESS: {
+      const inventory = [...state.inventory, action.payload];
       return {
         ...state,
         loading: false,
-        inventory: action.payload,
+        inventory,
         categories: Array.from(
-          new Set(action.payload.map(item => item.category_id))
+          new Set(inventory.map(item => item.category_id))
         ),
         error: null,
       };
+    }
     case UPDATE_ITEM_SUCCESS: {
-      const newInventory = state.inventory.map(item => {
+      const inventory = state.inventory.map(item => {
         return item.id === action.payload.id ? action.payload : item;
       });
       return {
         ...state,
         loading: false,
-        inventory: newInventory,
+        inventory,
         categories: Array.from(
-          new Set(newInventory.map(item => item.category_id))
+          new Set(inventory.map(item => item.category_id))
         ),
         error: null,
       };
     }
     case DELETE_ITEM_SUCCESS: {
-      const newInventory = state.inventory.filter(
+      const inventory = state.inventory.filter(
         item => item.id !== action.payload
       );
       return {
         ...state,
         loading: false,
-        inventory: newInventory,
+        inventory,
         categories: Array.from(
-          new Set(newInventory.map(item => item.category_id))
+          new Set(inventory.map(item => item.category_id))
         ),
         error: null,
       };
