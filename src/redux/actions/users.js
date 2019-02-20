@@ -5,7 +5,7 @@ export const ERROR = 'ERROR';
 export const REGISTRATION_SUCCESS = 'REGISTRATION_SUCCESS';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
-export const LOG_OUT = 'LOG_OUT';
+export const LOGOUT = 'LOGOUT';
 
 export const register = object => dispatch => {
   dispatch({ type: LOADING });
@@ -46,8 +46,8 @@ export const login = user => dispatch => {
     );
 };
 
-export const logOut = () => dispatch => {
-  dispatch({ type: LOG_OUT });
+export const logout = () => dispatch => {
+  dispatch({ type: LOGOUT });
 };
 
 export const deleteUser = id => dispatch => {

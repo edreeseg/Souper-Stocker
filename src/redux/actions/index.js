@@ -4,9 +4,10 @@ export const LOADING = 'LOADING';
 export {
   REGISTRATION_SUCCESS,
   LOGIN_SUCCESS,
+  LOGOUT,
   DELETE_USER_SUCCESS,
 } from './users';
-export { register, login, deleteUser } from './users';
+export { register, login, logout, deleteUser } from './users';
 
 export {
   SET_OPERATION,

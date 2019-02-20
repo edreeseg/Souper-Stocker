@@ -9,7 +9,7 @@ export const UPDATE_ITEM_SUCCESS = 'UPDATE_ITEM_SUCCESS';
 export const DELETE_ITEM_SUCCESS = 'DELETE_ITEM_SUCCESS';
 
 export const getInventory = user => dispatch => {
-  dispatch({ type: LOADING });
+  dispatch({ type: LOADING, payload: true });
   const config = {
     headers: {
       Authorization: user.token,

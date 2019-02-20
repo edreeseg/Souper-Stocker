@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
 import logo from '../assets/soup.svg';
-import { getInventory, setOperation } from '../redux/actions';
+import { getInventory, setOperation, logout } from '../redux/actions';
 
 const StyledNav = styled.header`
   display: flex;
@@ -54,6 +54,7 @@ const TopBar = styled.section`
       text-decoration: none;
       color: #eee;
       user-select: none;
+      cursor: pointer;
 
       &:hover,
       &.top-active {
@@ -63,7 +64,7 @@ const TopBar = styled.section`
         background: #848484;
       }
     }
-    span {
+    .icon-top {
       background: ${props => (props.open ? '#707070' : 'transparent')};
     }
   }
@@ -73,7 +74,7 @@ const TopBar = styled.section`
     justify-content: ${props =>
       props.loggedIn ? 'space-between' : 'flex-start'};
     align-items: center;
-    width: 40%;
+    width: 27%;
     padding: 0 20px;
 
     img {
@@ -175,20 +176,18 @@ class Nav extends React.Component {
     super(props);
     this.state = {
       open: false,
-      refreshing: false,
     };
   }
   handleOperationChange = e => {
     const name = e.target.getAttribute('name');
     this.props.setOperation(name === this.props.currentOperation ? null : name);
   };
-  refresh = () => {
-    this.setState({ refreshing: true });
+  handleLogout = e => {
+    this.props.logout();
+    this.props.history.push('/auth');
+  };
+  refresh = e => {
     this.props.getInventory(this.props.user);
-    this.refreshTimer = window.setInterval(() => {
-      if (!this.props.loading) this.setState({ refreshing: false });
-      window.clearInterval(this.refreshTimer);
-    }, 100);
   };
   render() {
     return (
@@ -201,10 +200,16 @@ class Nav extends React.Component {
             {this.props.user ? <h2>Welcome, {this.props.user.name}!</h2> : null}
           </div>
           <div>
-            <a href="/1">Test</a>
-            <a href="/2">Test</a>
-            <a href="/3">Test</a>
-            <a href="/4">Sign In</a>
+            <a href="/1">Volunteer</a>
+            <a href="/2">About Us</a>
+            {this.props.user ? (
+              <Link to={`/users/${this.props.user.username}`}>My Account</Link>
+            ) : (
+              <span>My Account</span>
+            )}
+            <span onClick={this.handleLogout}>
+              {this.props.user ? 'Logout' : 'Login'}
+            </span>
             <span
               className="fas fa-clipboard-list icon-top"
               onClick={() =>
@@ -249,7 +254,7 @@ class Nav extends React.Component {
               />
               <Icon
                 className={`fas fa-sync-alt icon-bottom${
-                  this.state.refreshing ? ' refreshing' : ''
+                  this.props.refreshing ? ' refreshing' : ''
                 }`}
                 name="GET"
                 current={this.props.currentOperation}
@@ -268,6 +273,7 @@ const mapStateToProps = state => {
     user: state.user,
     error: state.error,
     loading: state.loading,
+    refreshing: state.refreshing,
     currentOperation: state.currentOperation,
   };
 };
@@ -275,7 +281,7 @@ const mapStateToProps = state => {
 export default connect(
   // Must be written this way so React-Redux plays nice with React-Router.
   mapStateToProps,
-  { getInventory, setOperation },
+  { getInventory, setOperation, logout },
   null,
   { pure: false }
 )(Nav);

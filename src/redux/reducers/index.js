@@ -3,7 +3,7 @@ import {
   ERROR,
   REGISTRATION_SUCCESS,
   LOGIN_SUCCESS,
-  LOG_OUT,
+  LOGOUT,
   DELETE_USER_SUCCESS,
   SET_OPERATION,
   GET_INVENTORY_SUCCESS,
@@ -17,6 +17,7 @@ const initialState = {
   token: null,
   error: null,
   loading: false,
+  refreshing: false,
   kitchen: null,
   inventory: [],
   categories: [],
@@ -26,7 +27,11 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case LOADING:
-      return { ...state, loading: true };
+      return {
+        ...state,
+        loading: true,
+        refreshing: action.payload ? true : state.refreshing,
+      };
     case ERROR:
       return { ...state, loading: false, error: action.payload };
     case REGISTRATION_SUCCESS:
@@ -51,6 +56,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        refreshing: false,
         inventory: action.payload,
         categories: Array.from(
           new Set(action.payload.map(item => item.category_id))
@@ -103,10 +109,16 @@ const reducer = (state = initialState, action) => {
         loading: false,
         error: null,
       };
-    case LOG_OUT:
+    case LOGOUT:
       const emptyState = {};
       for (let key in state) emptyState[key] = null;
-      return { ...emptyState, categories: [], inventory: [], loading: false };
+      return {
+        ...emptyState,
+        categories: [],
+        inventory: [],
+        loading: false,
+        refreshing: false,
+      };
     default:
       return state;
   }
