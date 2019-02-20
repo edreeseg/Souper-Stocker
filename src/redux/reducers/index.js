@@ -3,6 +3,7 @@ import {
   ERROR,
   REGISTRATION_SUCCESS,
   LOGIN_SUCCESS,
+  LOG_OUT,
   DELETE_USER_SUCCESS,
   SET_OPERATION,
   GET_INVENTORY_SUCCESS,
@@ -102,6 +103,10 @@ const reducer = (state = initialState, action) => {
         loading: false,
         error: null,
       };
+    case LOG_OUT:
+      const emptyState = {};
+      for (let key in state) emptyState[key] = null;
+      return { ...emptyState, categories: [], inventory: [], loading: false };
     default:
       return state;
   }
