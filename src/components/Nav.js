@@ -200,7 +200,7 @@ class Nav extends React.Component {
             {this.props.user ? <h2>Welcome, {this.props.user.name}!</h2> : null}
           </div>
           <div>
-            <a href="/1">Volunteer</a>
+            <Link to="/volunteer">Volunteer</Link>
             <a href="/2">About Us</a>
             {this.props.user ? (
               <Link to={`/users/${this.props.user.username}`}>My Account</Link>

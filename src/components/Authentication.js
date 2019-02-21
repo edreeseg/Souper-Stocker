@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { register, login } from '../redux/actions';
 
-const AuthForm = styled.form`
+const FormContainer = styled.section`
   position: absolute;
   top: 50%;
   height: 50%;
@@ -16,10 +16,6 @@ const AuthForm = styled.form`
   justify-content: center;
   align-items: center;
 
-  > * {
-    margin-bottom: 4px;
-  }
-
   p {
     color: #dfdfdf;
     user-select: none;
@@ -28,6 +24,35 @@ const AuthForm = styled.form`
       text-decoration: underline;
       cursor: pointer;
     }
+  }
+`;
+
+const AuthForm = styled.form`
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  input {
+    width: 100%;
+  }
+
+  button {
+    background: transparent;
+    color: #eee;
+    border: 1px solid #eee;
+    width: 35%;
+    height: 30px;
+    cursor: pointer;
+
+    &:hover {
+      background: #eee;
+      color: rgb(8, 43, 50);
+    }
+  }
+
+  > * {
+    margin-bottom: 5px;
   }
 `;
 
@@ -82,6 +107,40 @@ const StyledFooter = styled.footer`
   height: 150px;
   border-top: 2px solid #222;
   background: #464646;
+  color: #eee;
+  padding: 10px;
+  line-height: 2rem;
+
+  section {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+
+    div {
+      height: 80%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+
+      &:first-child {
+        width: 70%;
+      }
+      &:last-child {
+        width: 30%;
+      }
+    }
+  }
+
+  h3 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 5px;
+  }
+
+  p {
+    font-size: 1.7rem;
+    margin-bottom: 5px;
+  }
 `;
 
 class Authentication extends React.Component {
@@ -94,6 +153,7 @@ class Authentication extends React.Component {
     email: '',
     role_id: '',
     loc_id: '',
+    newsletter: '',
     error: null,
     registering: false,
   };
@@ -159,6 +219,7 @@ class Authentication extends React.Component {
         password: '',
         role_id: '',
         loc_id: '',
+        newsletter: '',
         registering: !prevState.registering,
       };
     });
@@ -171,92 +232,98 @@ class Authentication extends React.Component {
             src="https://i.imgur.com/cjQP0CZ.jpg"
             alt="cityscape background"
           />
-          <AuthForm
-            onSubmit={
-              this.state.registering ? this.handleRegister : this.handleLogin
-            }
-          >
-            {this.state.registering ? (
-              <>
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  name="name"
-                  onChange={this.handleChange}
-                  value={this.state.name}
-                />
-                <input
-                  type="text"
-                  placeholder="Title"
-                  name="title"
-                  onChange={this.handleChange}
-                  value={this.state.title}
-                />
-                <input
-                  type="text"
-                  placeholder="Username"
-                  name="username"
-                  onChange={this.handleChange}
-                  value={this.state.username}
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  onChange={this.handleChange}
-                  value={this.state.password}
-                />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                  onChange={this.handleChange}
-                  value={this.state.email}
-                />
-                <input
-                  type="number"
-                  placeholder="Role ID"
-                  name="role_id"
-                  onChange={this.handleChange}
-                  value={this.state.role_id}
-                />
-                <input
-                  type="number"
-                  placeholder="Location ID"
-                  name="loc_id"
-                  onChange={this.handleChange}
-                  value={this.state.loc_id}
-                />
-                <button>Submit</button>
-                <p>
-                  Already have an account with us?{' '}
-                  <span onClick={this.handleTransition}>Log in!</span>
-                </p>
-              </>
-            ) : (
-              <>
-                <input
-                  type="text"
-                  placeholder="Username"
-                  name="username"
-                  onChange={this.handleChange}
-                  value={this.state.username}
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  onChange={this.handleChange}
-                  value={this.state.password}
-                />
-                <button>Login</button>
-                <p>
-                  Don't have an account?{' '}
-                  <span onClick={this.handleTransition}>Sign up!</span>
-                </p>
-              </>
-            )}
-          </AuthForm>
+          <FormContainer>
+            <AuthForm
+              onSubmit={
+                this.state.registering ? this.handleRegister : this.handleLogin
+              }
+            >
+              {this.state.registering ? (
+                <>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Full Name"
+                      name="name"
+                      onChange={this.handleChange}
+                      value={this.state.name}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Title"
+                      name="title"
+                      onChange={this.handleChange}
+                      value={this.state.title}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Username"
+                      name="username"
+                      onChange={this.handleChange}
+                      value={this.state.username}
+                    />
+                    <input
+                      type="password"
+                      placeholder="Password"
+                      name="password"
+                      onChange={this.handleChange}
+                      value={this.state.password}
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="email"
+                      placeholder="Email"
+                      name="email"
+                      onChange={this.handleChange}
+                      value={this.state.email}
+                    />
+                    <input
+                      type="number"
+                      placeholder="Role ID"
+                      name="role_id"
+                      onChange={this.handleChange}
+                      value={this.state.role_id}
+                    />
+                    <input
+                      type="number"
+                      placeholder="Location ID"
+                      name="loc_id"
+                      onChange={this.handleChange}
+                      value={this.state.loc_id}
+                    />
+                  </div>
+                  <button>Submit</button>
+                  <p>
+                    Already have an account with us?
+                    <span onClick={this.handleTransition}>Log in!</span>
+                  </p>
+                </>
+              ) : (
+                <>
+                  <input
+                    type="text"
+                    placeholder="Username"
+                    name="username"
+                    onChange={this.handleChange}
+                    value={this.state.username}
+                  />
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    onChange={this.handleChange}
+                    value={this.state.password}
+                  />
+                  <button>Login</button>
+                  <p>
+                    Don't have an account?{' '}
+                    <span onClick={this.handleTransition}>Sign up!</span>
+                  </p>
+                </>
+              )}
+            </AuthForm>
+          </FormContainer>
         </FormBackground>
         <MidSection>
           <div>
@@ -279,7 +346,37 @@ class Authentication extends React.Component {
             <p>See who needs help and where - no question, no uncertainty.</p>
           </div>
         </MidSection>
-        <StyledFooter />
+        <StyledFooter>
+          <section>
+            <div>
+              <h3>Keep in Touch</h3>
+              <p>
+                Want to learn more about our program? Keep informed on volunteer
+                opportunities? Need some good news in your inbox every now and
+                then? Subscribe to our newsletter!
+              </p>
+              <form>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  name="newsletter"
+                  onChange={this.handleChange}
+                  value={this.state.newsletter}
+                />
+                <button>Subscribe</button>
+              </form>
+            </div>
+            <div>
+              <address>
+                Test Kitchen 1<br />
+                123 Lambda Way
+                <br />
+                San Francisco, CA 12000
+                <br />
+              </address>
+            </div>
+          </section>
+        </StyledFooter>
       </section>
     );
   }

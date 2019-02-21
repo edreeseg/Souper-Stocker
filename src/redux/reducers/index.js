@@ -10,6 +10,7 @@ import {
   UPDATE_ITEM_SUCCESS,
   DELETE_ITEM_SUCCESS,
   ADD_ITEM_SUCCESS,
+  GET_LOC_SUCCESS,
 } from '../actions';
 
 const initialState = {
@@ -18,7 +19,7 @@ const initialState = {
   error: null,
   loading: false,
   refreshing: false,
-  kitchen: null,
+  locations: [],
   inventory: [],
   categories: [],
   currentOperation: null,
@@ -60,7 +61,7 @@ const reducer = (state = initialState, action) => {
         inventory: action.payload,
         categories: Array.from(
           new Set(action.payload.map(item => item.category_id))
-        ),
+        ).sort(),
         error: null,
       };
     case ADD_ITEM_SUCCESS: {
@@ -71,7 +72,7 @@ const reducer = (state = initialState, action) => {
         inventory,
         categories: Array.from(
           new Set(inventory.map(item => item.category_id))
-        ),
+        ).sort(),
         error: null,
       };
     }
@@ -85,7 +86,7 @@ const reducer = (state = initialState, action) => {
         inventory,
         categories: Array.from(
           new Set(inventory.map(item => item.category_id))
-        ),
+        ).sort(),
         error: null,
       };
     }
@@ -99,7 +100,7 @@ const reducer = (state = initialState, action) => {
         inventory,
         categories: Array.from(
           new Set(inventory.map(item => item.category_id))
-        ),
+        ).sort(),
         error: null,
       };
     }
@@ -116,8 +117,16 @@ const reducer = (state = initialState, action) => {
         ...emptyState,
         categories: [],
         inventory: [],
+        locations: [],
         loading: false,
         refreshing: false,
+      };
+    case GET_LOC_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        locations: action.payload,
       };
     default:
       return state;

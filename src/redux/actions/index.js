@@ -24,3 +24,7 @@ export {
   updateItem,
   deleteItem,
 } from './inventory';
+
+export { GET_LOC_SUCCESS } from './locations';
+
+export { getLocations } from './locations';
