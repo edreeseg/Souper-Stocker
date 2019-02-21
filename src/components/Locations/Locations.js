@@ -6,6 +6,17 @@ import { getLocations } from '../../redux/actions';
 const Container = styled.section`
   width: 90%;
   margin: 0 auto;
+
+  section {
+    display: flex;
+    flex-wrap: wrap;
+  }
+`;
+
+const Kitchen = styled.div`
+  width: 30%;
+  height: 100px;
+  border: 1px solid black;
 `;
 
 class Locations extends React.Component {
@@ -15,9 +26,18 @@ class Locations extends React.Component {
   render() {
     return (
       <Container>
-        {this.props.locations.map(x => (
-          <div>{x.name}</div>
-        ))}
+        <section>
+          {this.props.locations.map(x => (
+            <Kitchen>
+              <h4>{x.name}</h4>
+              <p>{x.address}</p>
+              {x.address2 ? <p>{x.address2}</p> : null}
+              <p>
+                {x.city}, {x.state} {x.zip}
+              </p>
+            </Kitchen>
+          ))}
+        </section>
       </Container>
     );
   }
