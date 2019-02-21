@@ -7,6 +7,8 @@ import { deleteItem, updateItem } from '../../redux/actions';
 
 const ItemCard = styled.div`
   font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
   width: 30%;
   display: flex;
   flex-direction: column;
@@ -14,9 +16,9 @@ const ItemCard = styled.div`
   align-items: center;
   background: #eee;
   min-height: 100px;
-  padding: 20px;
+  padding: 10px 7%;
   margin-bottom: 20px;
-  border-radius: 25px;
+  border-radius: 50%;
   border: 2px solid #222;
   cursor: pointer;
 
@@ -27,9 +29,6 @@ const ItemCard = styled.div`
   h2 {
     font-size: 3rem;
     color: ${props => (props.low ? '#D72B44' : '#3AA74C')};
-  }
-  p {
-    font-weight: 300;
   }
   img {
     height: 100px;
