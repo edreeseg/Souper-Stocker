@@ -106,9 +106,13 @@ class Inventory extends React.Component {
               />
               {this.props.inventory
                 .filter(x => x.category_id === this.state.current)
-                .map(x => (
-                  <Item key={x.id} data={x} />
-                ))}
+                .map(x => <Item key={x.id} data={x} />)
+                .sort((a, b) =>
+                  a.props.data.item.toLowerCase() >=
+                  b.props.data.item.toLowerCase()
+                    ? 1
+                    : -1
+                )}
             </>
           ) : (
             this.props.categories.map(x => (

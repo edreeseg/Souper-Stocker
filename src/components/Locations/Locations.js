@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { getLocations } from '../../redux/actions';
+import Kitchen from './Kitchen';
 
 const Container = styled.section`
   width: 90%;
@@ -13,12 +14,6 @@ const Container = styled.section`
   }
 `;
 
-const Kitchen = styled.div`
-  width: 30%;
-  height: 100px;
-  border: 1px solid black;
-`;
-
 class Locations extends React.Component {
   componentDidMount() {
     this.props.getLocations(this.props.user);
@@ -27,15 +22,8 @@ class Locations extends React.Component {
     return (
       <Container>
         <section>
-          {this.props.locations.map(x => (
-            <Kitchen>
-              <h4>{x.name}</h4>
-              <p>{x.address}</p>
-              {x.address2 ? <p>{x.address2}</p> : null}
-              <p>
-                {x.city}, {x.state} {x.zip}
-              </p>
-            </Kitchen>
+          {this.props.locations.map(kitchen => (
+            <Kitchen key={kitchen.id} data={kitchen} />
           ))}
         </section>
       </Container>
