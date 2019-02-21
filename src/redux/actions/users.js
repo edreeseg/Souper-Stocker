@@ -46,6 +46,10 @@ export const login = user => dispatch => {
     );
 };
 
+export const setStoredInfo = user => dispatch => {
+  dispatch({ type: LOGIN_SUCCESS, payload: user });
+};
+
 export const logout = () => dispatch => {
   dispatch({ type: LOGOUT });
 };

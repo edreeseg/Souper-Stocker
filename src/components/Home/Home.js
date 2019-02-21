@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Inventory from './Inventory';
 
-import { getInventory, addItem } from '../../redux/actions';
+import { getInventory, addItem, setStoredInfo } from '../../redux/actions';
 
 const Container = styled.section`
   width: 90%;
@@ -17,9 +17,18 @@ const Container = styled.section`
 
 class Home extends React.Component {
   componentDidMount() {
-    if (this.props.user === null) return this.props.history.push('/auth');
-    if (!this.props.inventory.length)
-      return this.props.getInventory(this.props.user);
+    // User should be given control over stored information.
+    const storedUser = JSON.parse(localStorage.getItem('soupUser'));
+    if (storedUser) {
+      this.props.setStoredInfo(storedUser);
+      if (!this.props.inventory.length) this.props.getInventory(storedUser);
+    } else {
+      if (this.props.user === null) return this.props.history.push('/auth');
+      if (!this.props.inventory.length)
+        this.props.getInventory(this.props.user);
+    }
+    if (!storedUser)
+      localStorage.setItem('soupUser', JSON.stringify(this.props.user));
   }
   render() {
     return (
@@ -44,5 +53,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getInventory, addItem }
+  { getInventory, addItem, setStoredInfo }
 )(Home);

@@ -7,7 +7,8 @@ export {
   LOGOUT,
   DELETE_USER_SUCCESS,
 } from './users';
-export { register, login, logout, deleteUser } from './users';
+
+export { register, login, logout, deleteUser, setStoredInfo } from './users';
 
 export {
   SET_OPERATION,

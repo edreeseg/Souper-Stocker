@@ -183,6 +183,7 @@ class Nav extends React.Component {
     this.props.setOperation(name === this.props.currentOperation ? null : name);
   };
   handleLogout = e => {
+    localStorage.removeItem('soupUser');
     this.props.logout();
     this.props.history.push('/auth');
   };
@@ -201,7 +202,9 @@ class Nav extends React.Component {
           </div>
           <div>
             <Link to="/volunteer">Volunteer</Link>
-            <a href="/2">About Us</a>
+            <a href="https://serene-snyder-c92c58.netlify.com/about.html">
+              About Us
+            </a>
             {this.props.user ? (
               <Link to={`/users/${this.props.user.username}`}>My Account</Link>
             ) : (
