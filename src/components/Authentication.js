@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { register, login } from '../redux/actions';
+import Loading from './Loading';
 
 const FormContainer = styled.section`
   position: absolute;
@@ -238,7 +239,9 @@ class Authentication extends React.Component {
                 this.state.registering ? this.handleRegister : this.handleLogin
               }
             >
-              {this.state.registering ? (
+              {this.props.loading ? (
+                <Loading color="#eee" size="3rem" />
+              ) : this.state.registering ? (
                 <>
                   <div>
                     <input
@@ -385,6 +388,8 @@ class Authentication extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
+    loading: state.loading,
+    error: state.error,
   };
 };
 
