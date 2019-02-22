@@ -18,6 +18,7 @@ const Container = styled.section`
 
 const StyledInventory = styled.section`
   width: 60%;
+  min-height: 80vh;
   margin: 0 auto;
   background: rgba(8, 43, 50, 0.8);
   border: 1px solid #222;

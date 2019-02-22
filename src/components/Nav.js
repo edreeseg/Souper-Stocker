@@ -102,13 +102,22 @@ const BottomBar = styled.nav`
     text-decoration: none;
   }
 
-  img {
-    height: 80%;
-    min-height: 88px;
-    user-select: none;
-    border-radius: 20px;
+  > section {
+    height: 100%;
+    width: 40%;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+
+    span {
+      font-size: 0.75em;
+      width: 50%;
+      height: 15%;
+    }
   }
-  div {
+  > div {
     width: 45%;
     display: flex;
     justify-content: space-between;
@@ -240,7 +249,16 @@ class Nav extends React.Component {
         </TopBar>
         <CSSTransition in={this.state.open} classNames="tray" timeout={500}>
           <BottomBar>
-            <img src="https://i.imgur.com/ixE731v.jpg" alt="placeholder logo" />
+            <section>
+              <span className="far fa-plus-square" />
+              <span>ADD ITEM</span>
+              <span className="far fa-edit" />
+              <span>UPDATE ITEM</span>
+              <span className="far fa-minus-square" />
+              <span>DELETE ITEM</span>
+              <span className="fas fa-sync-alt" />
+              <span>REFRESH INVENTORY</span>
+            </section>
             <div>
               <Link to="/add-item">
                 <Icon

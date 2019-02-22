@@ -20,6 +20,8 @@ const StyledError = styled.div`
   position: relative;
   width: 40vw;
   height: 25vw;
+  padding: 0 10px;
+  text-align: center;
   background: rgba(238, 238, 238, 0.9);
   border: 1px solid red;
   display: flex;

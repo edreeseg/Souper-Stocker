@@ -28,12 +28,10 @@ class Home extends React.Component {
   }
   render() {
     return (
-      <>
-        <Inventory
-          categories={this.props.categories}
-          inventory={this.props.inventory}
-        />
-      </>
+      <Inventory
+        categories={this.props.categories}
+        inventory={this.props.inventory}
+      />
     );
   }
 }
