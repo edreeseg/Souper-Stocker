@@ -7,6 +7,7 @@ import {
   DELETE_USER_SUCCESS,
   SET_OPERATION,
   GET_INVENTORY_SUCCESS,
+  UPDATING_ITEM,
   UPDATE_ITEM_SUCCESS,
   DELETE_ITEM_SUCCESS,
   ADD_ITEM_SUCCESS,
@@ -33,8 +34,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: true,
         refreshing: action.payload === 'get' ? true : state.refreshing,
-        updating:
-          typeof action.payload === 'number' ? action.payload : state.updating, // Bad way of telling when an item is updating.
       };
     case ERROR:
       return {
@@ -84,6 +83,11 @@ const reducer = (state = initialState, action) => {
         error: null,
       };
     }
+    case UPDATING_ITEM:
+      return {
+        ...state,
+        updating: action.payload,
+      };
     case UPDATE_ITEM_SUCCESS: {
       const inventory = state.inventory.map(item => {
         return item.id === action.payload.id ? action.payload : item;

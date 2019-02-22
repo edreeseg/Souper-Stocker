@@ -16,7 +16,7 @@ const ItemCard = styled.div`
   justify-content: center;
   align-items: center;
   background: #eee;
-  min-height: 100px;
+  min-height: 300px;
   padding: 10px;
   margin-bottom: 20px;
   align-self: flex-start;
@@ -24,7 +24,13 @@ const ItemCard = styled.div`
   cursor: pointer;
 
   &:hover {
-    background: #d6d6d6;
+    animation: hoverItem 0.2s ease forwards;
+  }
+
+  @keyframes hoverItem {
+    100% {
+      background: #d6d6d6;
+    }
   }
 
   h2 {
@@ -132,7 +138,7 @@ class Item extends React.Component {
           ) : (
             <>
               {this.props.updating ? (
-                <Loading />
+                <Loading size="4rem" />
               ) : (
                 <>
                   <h2>

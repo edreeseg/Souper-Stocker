@@ -5,6 +5,7 @@ export const ERROR = 'ERROR';
 export const SET_OPERATION = 'SET_OPERATION';
 export const ADD_ITEM_SUCCESS = 'ADD_ITEM_SUCCESS';
 export const GET_INVENTORY_SUCCESS = 'GET_INVENTORY_SUCCESS';
+export const UPDATING_ITEM = 'UPDATING_ITEM';
 export const UPDATE_ITEM_SUCCESS = 'UPDATE_ITEM_SUCCESS';
 export const DELETE_ITEM_SUCCESS = 'DELETE_ITEM_SUCCESS';
 
@@ -111,7 +112,7 @@ export const deleteItem = (id, user) => dispatch => {
 };
 
 export const updateItem = (id, changes, user) => dispatch => {
-  dispatch({ type: LOADING, payload: id });
+  dispatch({ type: UPDATING_ITEM, payload: id });
   const { item, amount, unit } = changes;
   if (!item || !amount || !unit)
     return dispatch({ type: ERROR, payload: 'All fields must have values.' });

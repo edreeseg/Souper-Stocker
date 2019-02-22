@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Loading from '../Loading';
 import Item from './Item';
 import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
@@ -19,10 +20,9 @@ const StyledInventory = styled.section`
   min-height: 90%;
   margin: 0 auto;
   background: rgba(8, 43, 50, 0.8);
-  border-radius: 25px;
   border: 1px solid #222;
   padding: 20px;
-  padding-top: 70px;
+  padding-top: 90px;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
@@ -30,9 +30,10 @@ const StyledInventory = styled.section`
 
   span {
     position: absolute;
+    color: #eee;
     top: 10px;
     right: 10px;
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     cursor: pointer;
 
     &:active {
@@ -61,10 +62,13 @@ const StyledInventory = styled.section`
     }
   }
   .title {
-    font-size: 5rem;
+    font-size: 6rem;
     color: #eee;
     position: absolute;
     top: 10px;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 3px;
     left: 50%;
     transform: translateX(-50%);
     opacity: 1;
@@ -86,7 +90,14 @@ export const Card = styled.div`
   cursor: pointer;
 
   &:hover {
-    background: #d6d6d6;
+    animation: hoverText 0.2s ease forwards;
+  }
+
+  @keyframes hoverText {
+    100% {
+      background: #363636;
+      color: #eee;
+    }
   }
 
   h2 {
@@ -111,7 +122,17 @@ class Inventory extends React.Component {
         <CSSTransition in={this.state.changing} timeout={300} classNames="out">
           <StyledInventory>
             <h1 className="title">{this.state.current || 'Categories'}</h1>
-            {this.state.current ? (
+            {this.props.loading ? (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Loading color="#eee" size="5rem" />
+              </div>
+            ) : this.state.current ? (
               <>
                 <span
                   className="fas fa-undo-alt"
