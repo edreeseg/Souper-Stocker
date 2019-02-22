@@ -12,9 +12,14 @@ class Home extends React.Component {
     const storedUser = JSON.parse(localStorage.getItem('soupUser'));
     if (storedUser) {
       this.props.setStoredInfo(storedUser);
-      if (!this.props.inventory.length) this.props.getInventory(storedUser);
+      if (storedUser.role !== 1) return this.props.history.push('/volunteer');
+      else {
+        if (!this.props.inventory.length) this.props.getInventory(storedUser);
+      }
     } else {
       if (this.props.user === null) return this.props.history.push('/auth');
+      if (this.props.user.role !== 1)
+        return this.props.history.push('/volunteer');
       if (!this.props.inventory.length)
         this.props.getInventory(this.props.user);
     }

@@ -1,6 +1,7 @@
 import {
   LOADING,
   ERROR,
+  CLEAR_ERROR,
   REGISTRATION_SUCCESS,
   LOGIN_SUCCESS,
   LOGOUT,
@@ -33,6 +34,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        error: null,
         refreshing: action.payload === 'get' ? true : state.refreshing,
       };
     case ERROR:
@@ -41,6 +43,12 @@ const reducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
         updating: null,
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: null,
       };
     case REGISTRATION_SUCCESS:
       return {
@@ -87,6 +95,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         updating: action.payload,
+        error: null,
       };
     case UPDATE_ITEM_SUCCESS: {
       const inventory = state.inventory.map(item => {

@@ -183,6 +183,10 @@ class Authentication extends React.Component {
     error: null,
     registering: false,
   };
+  componentDidMount() {
+    const storedUser = JSON.parse(localStorage.getItem('soupUser'));
+    if (storedUser) this.props.history.push('/');
+  }
   componentDidUpdate(prevProps) {
     if (this.props.user !== null) this.props.history.push('/');
   }

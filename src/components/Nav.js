@@ -185,6 +185,10 @@ class Nav extends React.Component {
       open: false,
     };
   }
+  componentDidUpdate(prevProps, prevState) {
+    if (!this.props.user || this.props.user.role !== 1)
+      if (prevState.open) this.setState({ open: false });
+  }
   handleOperationChange = e => {
     const name = e.target.getAttribute('name');
     this.props.setOperation(name === this.props.currentOperation ? null : name);
@@ -200,6 +204,10 @@ class Nav extends React.Component {
       this.props.history.push('/');
       this.props.setOperation(null);
     }
+  };
+  openMenu = e => {
+    if (this.props.user && this.props.user.role === 1)
+      this.setState(prevState => ({ open: !prevState.open }));
   };
   render() {
     return (
@@ -217,7 +225,7 @@ class Nav extends React.Component {
               About Us
             </a>
             {this.props.user ? (
-              <Link to={`/users/${this.props.user.username}`}>My Account</Link>
+              <span>My Account</span>
             ) : (
               <span>My Account</span>
             )}
@@ -226,11 +234,7 @@ class Nav extends React.Component {
             </span>
             <span
               className="fas fa-clipboard-list icon-top inventory-button"
-              onClick={() =>
-                this.props.user
-                  ? this.setState(prevState => ({ open: !prevState.open }))
-                  : null
-              }
+              onClick={this.openMenu}
             />
           </div>
         </TopBar>

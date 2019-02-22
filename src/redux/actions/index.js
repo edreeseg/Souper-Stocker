@@ -1,5 +1,6 @@
 export const ERROR = 'ERROR';
 export const LOADING = 'LOADING';
+export const CLEAR_ERROR = 'CLEAR_ERROR';
 
 export {
   REGISTRATION_SUCCESS,
@@ -30,3 +31,7 @@ export {
 export { GET_LOC_SUCCESS } from './locations';
 
 export { getLocations } from './locations';
+
+export const clearError = () => dispatch => {
+  dispatch({ type: CLEAR_ERROR });
+};
