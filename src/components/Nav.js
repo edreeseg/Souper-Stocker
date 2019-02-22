@@ -13,7 +13,6 @@ const StyledNav = styled.header`
   width: 100%;
 
   .icon-top {
-    font-size: 2.5rem;
     cursor: pointer;
   }
 
@@ -21,7 +20,6 @@ const StyledNav = styled.header`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 3.5rem;
   }
 `;
 
@@ -34,7 +32,6 @@ const TopBar = styled.section`
 
   h2 {
     color: #eee;
-    font-size: 1.8rem;
     margin-left: 10px;
   }
 
@@ -47,10 +44,11 @@ const TopBar = styled.section`
     a,
     span {
       display: flex;
+      font-size: 0.75em;
+      padding: 0 10px;
       justify-content: center;
       align-items: center;
       height: 100%;
-      width: 10%;
       text-decoration: none;
       color: #eee;
       user-select: none;
@@ -64,6 +62,10 @@ const TopBar = styled.section`
         background: #848484;
       }
     }
+    .inventory-button {
+      padding: 0 20px;
+      font-size: 1em;
+    }
     .icon-top {
       background: ${props => (props.open ? '#707070' : 'transparent')};
     }
@@ -76,6 +78,10 @@ const TopBar = styled.section`
     align-items: center;
     width: 27%;
     padding: 0 20px;
+
+    h2 {
+      font-size: 0.75em;
+    }
 
     img {
       height: 90%;
@@ -166,6 +172,7 @@ const BottomBar = styled.nav`
 
 const Icon = styled.span`
   text-decoration: none;
+  font-size: 1.5em;
   color: ${props => (props.name === props.current ? '#3AA74C' : '#222')};
   user-select: none;
   cursor: pointer;
@@ -189,6 +196,10 @@ class Nav extends React.Component {
   };
   refresh = e => {
     this.props.getInventory(this.props.user);
+    if (this.props.currentOperation === 'POST') {
+      this.props.history.push('/');
+      this.props.setOperation(null);
+    }
   };
   render() {
     return (
@@ -214,7 +225,7 @@ class Nav extends React.Component {
               {this.props.user ? 'Logout' : 'Login'}
             </span>
             <span
-              className="fas fa-clipboard-list icon-top"
+              className="fas fa-clipboard-list icon-top inventory-button"
               onClick={() =>
                 this.props.user
                   ? this.setState(prevState => ({ open: !prevState.open }))
@@ -227,14 +238,6 @@ class Nav extends React.Component {
           <BottomBar>
             <img src="https://i.imgur.com/ixE731v.jpg" alt="placeholder logo" />
             <div>
-              <Link to="/">
-                <Icon
-                  className="fas fa-home icon-bottom"
-                  name={null}
-                  current={this.props.currentOperation}
-                  onClick={this.handleOperationChange}
-                />
-              </Link>
               <Link to="/add-item">
                 <Icon
                   className="far fa-plus-square icon-bottom"

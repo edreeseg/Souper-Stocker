@@ -7,8 +7,8 @@ import Loading from '../Loading';
 import { deleteItem, updateItem } from '../../redux/actions';
 
 const ItemCard = styled.div`
-  font-size: 2rem;
   font-weight: bold;
+  font-size: 0.75em;
   text-align: center;
   width: 30%;
   display: flex;
@@ -16,7 +16,7 @@ const ItemCard = styled.div`
   justify-content: center;
   align-items: center;
   background: #eee;
-  min-height: 300px;
+  min-height: 5%;
   padding: 10px;
   margin-bottom: 20px;
   align-self: flex-start;
@@ -34,8 +34,8 @@ const ItemCard = styled.div`
   }
 
   h2 {
-    font-size: 3rem;
     color: ${props => (props.low ? '#D72B44' : '#3AA74C')};
+    font-size: 1.25em;
   }
   img {
     height: 100px;
@@ -138,7 +138,7 @@ class Item extends React.Component {
           ) : (
             <>
               {this.props.updating ? (
-                <Loading size="4rem" />
+                <Loading />
               ) : (
                 <>
                   <h2>

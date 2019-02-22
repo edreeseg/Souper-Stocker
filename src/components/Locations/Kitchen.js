@@ -4,17 +4,22 @@ import styled from 'styled-components';
 
 const StyledKitchen = styled.div`
   width: 100%;
-  height: 100px;
   padding: 10px;
+  margin-bottom: 15px;
   border: 1px solid #222;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
+  font-size: 0.7em;
   background: #464646;
   color: #eee;
-  font-size: 2rem;
   cursor: pointer;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 
   &:hover {
     animation: kitchenHover 0.2s ease forwards;
@@ -24,10 +29,6 @@ const StyledKitchen = styled.div`
     100% {
       background: #535353;
     }
-  }
-
-  h2 {
-    font-size: 2rem;
   }
 `;
 

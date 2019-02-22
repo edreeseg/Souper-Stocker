@@ -7,7 +7,7 @@ import Loading from './Loading';
 const FormContainer = styled.section`
   position: absolute;
   top: 50%;
-  height: 50%;
+  height: 60%;
   transform: translateY(-50%);
   margin: 0 auto;
   width: 100%;
@@ -37,7 +37,9 @@ const AuthForm = styled.form`
   input {
     width: 100%;
   }
-
+  p {
+    font-size: 0.75em;
+  }
   button {
     background: transparent;
     color: #eee;
@@ -54,6 +56,10 @@ const AuthForm = styled.form`
 
   > * {
     margin-bottom: 5px;
+  }
+  .register-buttons {
+    text-align: center;
+    width: 125%;
   }
 `;
 
@@ -83,15 +89,15 @@ const MidSection = styled.div`
     text-align: center;
 
     h2 {
-      font-size: 4rem;
       font-weight: 300;
+      font-size: 1.6em;
     }
     h3 {
-      font-size: 3rem;
       font-weight: 300;
+      font-size: 1.3em;
     }
     p {
-      font-size: 2.2rem;
+      font-size: 1em;
       font-weight: 300;
     }
   }
@@ -110,12 +116,12 @@ const StyledFooter = styled.footer`
   background: #464646;
   color: #eee;
   padding: 10px;
-  line-height: 2rem;
 
   section {
     width: 90%;
     margin: 0 auto;
     display: flex;
+    justify-content: space-between;
 
     div {
       height: 80%;
@@ -124,7 +130,7 @@ const StyledFooter = styled.footer`
       justify-content: space-around;
 
       &:first-child {
-        width: 70%;
+        width: 60%;
       }
       &:last-child {
         width: 30%;
@@ -133,14 +139,33 @@ const StyledFooter = styled.footer`
   }
 
   h3 {
-    font-size: 2.5rem;
-    font-weight: 300;
     margin-bottom: 5px;
+    font-size: 1.1em;
   }
 
   p {
-    font-size: 1.7rem;
+    font-size: 0.7em;
     margin-bottom: 5px;
+  }
+`;
+
+const Register = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 150%;
+
+  div {
+    display: flex;
+    flex-direction: column;
+
+    input,
+    select {
+      margin-bottom: 5px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 `;
 
@@ -240,67 +265,81 @@ class Authentication extends React.Component {
               }
             >
               {this.props.loading ? (
-                <Loading color="#eee" size="3rem" />
+                <Loading color="#eee" />
               ) : this.state.registering ? (
                 <>
-                  <div>
-                    <input
-                      type="text"
-                      placeholder="Full Name"
-                      name="name"
-                      onChange={this.handleChange}
-                      value={this.state.name}
-                    />
-                    <input
-                      type="text"
-                      placeholder="Title"
-                      name="title"
-                      onChange={this.handleChange}
-                      value={this.state.title}
-                    />
-                    <input
-                      type="text"
-                      placeholder="Username"
-                      name="username"
-                      onChange={this.handleChange}
-                      value={this.state.username}
-                    />
-                    <input
-                      type="password"
-                      placeholder="Password"
-                      name="password"
-                      onChange={this.handleChange}
-                      value={this.state.password}
-                    />
+                  <Register>
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Full Name"
+                        name="name"
+                        onChange={this.handleChange}
+                        value={this.state.name}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Title"
+                        name="title"
+                        onChange={this.handleChange}
+                        value={this.state.title}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Username"
+                        name="username"
+                        onChange={this.handleChange}
+                        value={this.state.username}
+                      />
+                      <input
+                        type="password"
+                        placeholder="Password"
+                        name="password"
+                        onChange={this.handleChange}
+                        value={this.state.password}
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="email"
+                        placeholder="Email"
+                        name="email"
+                        onChange={this.handleChange}
+                        value={this.state.email}
+                      />
+                      <select
+                        name="role_id"
+                        onChange={this.handleChange}
+                        value={this.state.role_id}
+                      >
+                        <option value="" disabled hidden>
+                          Role
+                        </option>
+                        <option value={1}>Manager</option>
+                        <option value={2}>Volunteer</option>
+                      </select>
+                      <select
+                        name="loc_id"
+                        onChange={this.handleChange}
+                        value={this.state.loc_id}
+                      >
+                        <option value="" disabled hidden>
+                          Location
+                        </option>
+                        <option value={1}>Test Kitchen 1</option>
+                        <option value={2}>Test Kitchen 2</option>
+                        <option value={3}>Test Kitchen 3</option>
+                        <option value={4}>Test Kitchen 4</option>
+                      </select>
+                    </div>
+                  </Register>
+                  <div className="register-buttons">
+                    <button type="submit">Submit</button>
+                    <p>
+                      Already have an account with us?{' '}
+                      <span onClick={this.handleTransition}>Log in!</span>
+                    </p>
                   </div>
-                  <div>
-                    <input
-                      type="email"
-                      placeholder="Email"
-                      name="email"
-                      onChange={this.handleChange}
-                      value={this.state.email}
-                    />
-                    <input
-                      type="number"
-                      placeholder="Role ID"
-                      name="role_id"
-                      onChange={this.handleChange}
-                      value={this.state.role_id}
-                    />
-                    <input
-                      type="number"
-                      placeholder="Location ID"
-                      name="loc_id"
-                      onChange={this.handleChange}
-                      value={this.state.loc_id}
-                    />
-                  </div>
-                  <button>Submit</button>
-                  <p>
-                    Already have an account with us?
-                    <span onClick={this.handleTransition}>Log in!</span>
-                  </p>
                 </>
               ) : (
                 <>
@@ -355,8 +394,8 @@ class Authentication extends React.Component {
               <h3>Keep in Touch</h3>
               <p>
                 Want to learn more about our program? Keep informed on volunteer
-                opportunities? Need some good news in your inbox every now and
-                then? Subscribe to our newsletter!
+                opportunities? Need some positive vibes in your inbox every now
+                and then? Subscribe to our newsletter!
               </p>
               <form>
                 <input
@@ -371,11 +410,14 @@ class Authentication extends React.Component {
             </div>
             <div>
               <address>
-                Test Kitchen 1<br />
-                123 Lambda Way
-                <br />
-                San Francisco, CA 12000
-                <br />
+                <p>
+                  Test Kitchen 1<br />
+                  123 Lambda Way
+                  <br />
+                  San Francisco, CA 12000
+                  <br />
+                  (555) 555-5555
+                </p>
               </address>
             </div>
           </section>

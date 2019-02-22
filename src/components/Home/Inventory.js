@@ -7,8 +7,9 @@ import { connect } from 'react-redux';
 import inventoryBG from '../../assets/qbkls.png';
 
 const Container = styled.section`
-  height: calc(100% - 45px);
   width: 100%;
+  min-height: calc(100% - 45px);
+  padding: 50px 0;
   display: flex;
   align-items: center;
   background: ${props => `url(${props.bg})`};
@@ -17,7 +18,6 @@ const Container = styled.section`
 
 const StyledInventory = styled.section`
   width: 60%;
-  min-height: 90%;
   margin: 0 auto;
   background: rgba(8, 43, 50, 0.8);
   border: 1px solid #222;
@@ -33,7 +33,7 @@ const StyledInventory = styled.section`
     color: #eee;
     top: 10px;
     right: 10px;
-    font-size: 3.5rem;
+    font-size: 1.3em;
     cursor: pointer;
 
     &:active {
@@ -62,8 +62,8 @@ const StyledInventory = styled.section`
     }
   }
   .title {
-    font-size: 6rem;
     color: #eee;
+    font-size: 1.6em;
     position: absolute;
     top: 10px;
     font-family: 'Oswald', sans-serif;
@@ -76,7 +76,6 @@ const StyledInventory = styled.section`
 `;
 
 export const Card = styled.div`
-  font-size: 2rem;
   width: 45%;
   display: flex;
   flex-direction: column;
@@ -86,6 +85,7 @@ export const Card = styled.div`
   min-height: 100px;
   padding: 20px;
   margin-bottom: 20px;
+  font-size: 0.95em;
   border: 2px solid #222;
   cursor: pointer;
 
@@ -101,7 +101,6 @@ export const Card = styled.div`
   }
 
   h2 {
-    font-size: 3rem;
   }
 `;
 
@@ -130,7 +129,7 @@ class Inventory extends React.Component {
                   alignItems: 'center',
                 }}
               >
-                <Loading color="#eee" size="5rem" />
+                <Loading color="#eee" />
               </div>
             ) : this.state.current ? (
               <>

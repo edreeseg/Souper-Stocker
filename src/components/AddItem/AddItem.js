@@ -15,6 +15,10 @@ class AddItem extends React.Component {
     error: '',
   };
 
+  componentDidUpdate(prevProps) {
+    if (this.props.currentOperation !== 'POST') this.props.history.push('/');
+  }
+
   handleChange = e => this.setState({ [e.target.name]: e.target.value });
 
   handleAddItem = e => {
@@ -139,6 +143,7 @@ const mapStateToProps = state => {
     inventory: state.inventory,
     error: state.error,
     loading: state.loading,
+    currentOperation: state.currentOperation,
   };
 };
 

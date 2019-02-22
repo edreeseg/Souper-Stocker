@@ -5,7 +5,7 @@ import { getLocations } from '../../redux/actions';
 import Kitchen from './Kitchen';
 
 const Container = styled.section`
-  height: calc(100% - 45px);
+  min-height: calc(100% - 45px);
   width: 90%;
   margin: 0 auto;
   margin-bottom: 75px;
@@ -14,8 +14,6 @@ const Container = styled.section`
 const Kitchens = styled.section`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
   width: 36.5%;
 `;
 
@@ -29,19 +27,16 @@ const TopSection = styled.section`
     height: 100%;
     width: 45%;
     padding: 5% 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     text-align: center;
 
     h2 {
-      font-size: 6rem;
+      font-size: 1.5em;
       font-weight: 300;
+      margin-bottom: 20px;
     }
     p {
-      font-size: 3rem;
+      font-size: 1.1em;
       font-weight: 300;
-      line-height: 4rem;
     }
   }
 
@@ -54,7 +49,6 @@ const TopSection = styled.section`
 const MidSection = styled.section`
   display: flex;
   justify-content: space-between;
-  height: 50%;
   width: 100%;
   margin-top: 50px;
 
@@ -77,12 +71,12 @@ const StyledFooter = styled.footer`
   background: #464646;
   color: #eee;
   padding: 10px;
-  line-height: 2rem;
 
   section {
     width: 90%;
     margin: 0 auto;
     display: flex;
+    justify-content: space-between;
 
     div {
       height: 80%;
@@ -91,7 +85,7 @@ const StyledFooter = styled.footer`
       justify-content: space-around;
 
       &:first-child {
-        width: 70%;
+        width: 60%;
       }
       &:last-child {
         width: 30%;
@@ -100,13 +94,12 @@ const StyledFooter = styled.footer`
   }
 
   h3 {
-    font-size: 2.5rem;
-    font-weight: 300;
     margin-bottom: 5px;
+    font-size: 1.1em;
   }
 
   p {
-    font-size: 1.7rem;
+    font-size: 0.7em;
     margin-bottom: 5px;
   }
 `;
@@ -139,7 +132,7 @@ class Locations extends React.Component {
           </TopSection>
           <MidSection>
             <img
-              src="https://i.imgur.com/TmsK13W.jpg"
+              src="https://i.imgur.com/YzD6KiP.jpg"
               alt="greyscale img of boy"
             />
             <Kitchens>
@@ -171,11 +164,14 @@ class Locations extends React.Component {
             </div>
             <div>
               <address>
-                Test Kitchen 1<br />
-                123 Lambda Way
-                <br />
-                San Francisco, CA 12000
-                <br />
+                <p>
+                  Test Kitchen 1<br />
+                  123 Lambda Way
+                  <br />
+                  San Francisco, CA 12000
+                  <br />
+                  (555) 555-5555
+                </p>
               </address>
             </div>
           </section>
