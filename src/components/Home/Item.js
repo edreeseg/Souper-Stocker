@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 
+import Loading from '../Loading';
 import { deleteItem, updateItem } from '../../redux/actions';
 
 const ItemCard = styled.div`
@@ -16,9 +17,9 @@ const ItemCard = styled.div`
   align-items: center;
   background: #eee;
   min-height: 100px;
-  padding: 10px 7%;
+  padding: 10px;
   margin-bottom: 20px;
-  border-radius: 50%;
+  align-self: flex-start;
   border: 2px solid #222;
   cursor: pointer;
 
@@ -38,17 +39,14 @@ const ItemCard = styled.div`
   /* React-Transition-Group Styles */
 
   &.in-appear {
-    transform: rotateX(-90deg);
-    transform-origin: top;
+    opacity: 0;
   }
   &.in-appear-active {
-    transform: rotateX(0deg);
-    transform-origin: top;
-    transition: transform 0.4s ease;
+    opacity: 1;
+    transition: opacity 0.3s ease;
   }
   &.in-enter-done {
-    transform: rotateX(0deg);
-    transform-origin: top;
+    opacity: 1;
   }
 `;
 
@@ -100,7 +98,7 @@ class Item extends React.Component {
   };
   render() {
     return (
-      <CSSTransition in={true} timeout={400} classNames="in" appear={true}>
+      <CSSTransition in={true} timeout={300} classNames="in" appear={true}>
         <ItemCard
           low={this.props.data.min_quan > this.props.data.amount ? 1 : 0}
           onClick={this.handleClick}
@@ -133,24 +131,30 @@ class Item extends React.Component {
             </UpdateForm>
           ) : (
             <>
-              <h2>
-                {this.props.data.item.charAt(0).toUpperCase() +
-                  this.props.data.item.slice(1)}
-              </h2>
-              <img
-                src={
-                  this.props.data.amount > this.props.data.min_quan
-                    ? this.props.data.color_img
-                    : this.props.data.bw_img
-                }
-                alt={this.props.data.item}
-              />
-              <p>Quantity: {this.props.data.amount}</p>
-              <p>
-                Unit:{' '}
-                {this.props.data.unit.charAt(0).toUpperCase() +
-                  this.props.data.unit.slice(1)}
-              </p>
+              {this.props.updating ? (
+                <Loading />
+              ) : (
+                <>
+                  <h2>
+                    {this.props.data.item.charAt(0).toUpperCase() +
+                      this.props.data.item.slice(1)}
+                  </h2>
+                  <img
+                    src={
+                      this.props.data.amount > this.props.data.min_quan
+                        ? this.props.data.color_img
+                        : this.props.data.bw_img
+                    }
+                    alt={this.props.data.item}
+                  />
+                  <p>Quantity: {this.props.data.amount}</p>
+                  <p>
+                    Unit:{' '}
+                    {this.props.data.unit.charAt(0).toUpperCase() +
+                      this.props.data.unit.slice(1)}
+                  </p>
+                </>
+              )}
             </>
           )}
         </ItemCard>

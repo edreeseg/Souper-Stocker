@@ -7,25 +7,47 @@ import Kitchen from './Kitchen';
 const Container = styled.section`
   width: 90%;
   margin: 0 auto;
+`;
 
-  section {
-    display: flex;
-    flex-wrap: wrap;
+const Kitchens = styled.section`
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+`;
+
+const TopSection = styled.section`
+  display: flex;
+  justify-content: space-around;
+
+  div {
+    width: 40%;
+    height: 200px;
+    border: 1px solid black;
+  }
+
+  img {
+    width: 40%;
+    align-self: center;
   }
 `;
 
 class Locations extends React.Component {
   componentDidMount() {
-    this.props.getLocations(this.props.user);
+    if (this.props.user) this.props.getLocations(this.props.user);
+    else this.props.history.push('/');
   }
   render() {
     return (
       <Container>
-        <section>
+        <TopSection>
+          <div />
+          <img src="https://i.imgur.com/Xo9PMVY.jpg" alt="bowl of soup" />
+        </TopSection>
+        <Kitchens>
           {this.props.locations.map(kitchen => (
             <Kitchen key={kitchen.id} data={kitchen} />
           ))}
-        </section>
+        </Kitchens>
       </Container>
     );
   }

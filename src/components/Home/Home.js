@@ -1,17 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import Inventory from './Inventory';
 
 import { getInventory, addItem, setStoredInfo } from '../../redux/actions';
-
-const Container = styled.section`
-  width: 90%;
-  margin: 0 auto;
-  padding: 20px 0;
-  display: flex;
-  flex-direction: column;
-`;
 
 // name, title, username, password, role_id, loc_id - user schema
 
@@ -32,12 +23,12 @@ class Home extends React.Component {
   }
   render() {
     return (
-      <Container>
+      <>
         <Inventory
           categories={this.props.categories}
           inventory={this.props.inventory}
         />
-      </Container>
+      </>
     );
   }
 }

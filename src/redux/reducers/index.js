@@ -19,6 +19,7 @@ const initialState = {
   error: null,
   loading: false,
   refreshing: false,
+  updating: null,
   locations: [],
   inventory: [],
   categories: [],
@@ -31,10 +32,17 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        refreshing: action.payload ? true : state.refreshing,
+        refreshing: action.payload === 'get' ? true : state.refreshing,
+        updating:
+          typeof action.payload === 'number' ? action.payload : state.updating, // Bad way of telling when an item is updating.
       };
     case ERROR:
-      return { ...state, loading: false, error: action.payload };
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+        updating: null,
+      };
     case REGISTRATION_SUCCESS:
       return {
         ...state,
@@ -84,6 +92,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         inventory,
+        updating: null,
         categories: Array.from(
           new Set(inventory.map(item => item.category_id))
         ).sort(),

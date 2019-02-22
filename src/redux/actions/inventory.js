@@ -9,7 +9,7 @@ export const UPDATE_ITEM_SUCCESS = 'UPDATE_ITEM_SUCCESS';
 export const DELETE_ITEM_SUCCESS = 'DELETE_ITEM_SUCCESS';
 
 export const getInventory = user => dispatch => {
-  dispatch({ type: LOADING, payload: true });
+  dispatch({ type: LOADING, payload: 'get' });
   const config = {
     headers: {
       Authorization: user.token,
@@ -111,7 +111,7 @@ export const deleteItem = (id, user) => dispatch => {
 };
 
 export const updateItem = (id, changes, user) => dispatch => {
-  dispatch({ type: LOADING });
+  dispatch({ type: LOADING, payload: id });
   const { item, amount, unit } = changes;
   if (!item || !amount || !unit)
     return dispatch({ type: ERROR, payload: 'All fields must have values.' });

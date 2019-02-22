@@ -2,11 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 import Item from './Item';
 import { CSSTransition } from 'react-transition-group';
+import { connect } from 'react-redux';
+import inventoryBG from '../../assets/qbkls.png';
+
+const Container = styled.section`
+  height: calc(100% - 45px);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: ${props => `url(${props.bg})`};
+  /* Background pattern from Toptal Subtle Patterns */
+`;
 
 const StyledInventory = styled.section`
-  width: 80%;
+  width: 60%;
+  min-height: 90%;
   margin: 0 auto;
-  background: #4ac4ff;
+  background: rgba(8, 43, 50, 0.8);
   border-radius: 25px;
   border: 1px solid #222;
   padding: 20px;
@@ -31,36 +43,37 @@ const StyledInventory = styled.section`
 
   &.out-enter {
     * {
-      transform: rotateX(0);
-      transform-origin: top;
+      opacity: 1;
+      pointer-events: none;
     }
   }
   &.out-enter-active {
     * {
-      transform: rotateX(-90deg);
-      transform-origin: top;
-      transition: transform 0.4s ease;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
     }
   }
   &.out-enter-done {
     * {
-      transform: rotateX(-90deg);
-      transform-origin: top;
+      opacity: 0;
+      pointer-events: none;
     }
   }
   .title {
-    font-size: 4rem;
-    font-weight: 700;
+    font-size: 5rem;
+    color: #eee;
     position: absolute;
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
+    opacity: 1;
   }
 `;
 
 export const Card = styled.div`
   font-size: 2rem;
-  width: 30%;
+  width: 45%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -69,7 +82,6 @@ export const Card = styled.div`
   min-height: 100px;
   padding: 20px;
   margin-bottom: 20px;
-  border-radius: 25px;
   border: 2px solid #222;
   cursor: pointer;
 
@@ -91,40 +103,56 @@ class Inventory extends React.Component {
     this.setState({ changing: true });
     setTimeout(() => {
       this.setState({ current: category, changing: false });
-    }, 400);
+    }, 300);
   };
   render() {
     return (
-      <CSSTransition in={this.state.changing} timeout={400} classNames="out">
-        <StyledInventory>
-          <h1 className="title">{this.state.current || 'Categories'}</h1>
-          {this.state.current ? (
-            <>
-              <span
-                className="fas fa-undo-alt"
-                onClick={e => this.setState({ current: null })}
-              />
-              {this.props.inventory
-                .filter(x => x.category_id === this.state.current)
-                .map(x => <Item key={x.id} data={x} />)
-                .sort((a, b) =>
-                  a.props.data.item.toLowerCase() >=
-                  b.props.data.item.toLowerCase()
-                    ? 1
-                    : -1
-                )}
-            </>
-          ) : (
-            this.props.categories.map(x => (
-              <Card key={x} onClick={this.handleSelection(x)}>
-                <h2>{x}</h2>
-              </Card>
-            ))
-          )}
-        </StyledInventory>
-      </CSSTransition>
+      <Container bg={inventoryBG}>
+        <CSSTransition in={this.state.changing} timeout={300} classNames="out">
+          <StyledInventory>
+            <h1 className="title">{this.state.current || 'Categories'}</h1>
+            {this.state.current ? (
+              <>
+                <span
+                  className="fas fa-undo-alt"
+                  onClick={e => this.setState({ current: null })}
+                />
+                {this.props.inventory
+                  .filter(x => x.category_id === this.state.current)
+                  .map(x => (
+                    <Item
+                      key={x.id}
+                      data={x}
+                      updating={this.props.updating === x.id ? 1 : 0}
+                    />
+                  ))
+                  .sort((a, b) =>
+                    a.props.data.item.toLowerCase() >=
+                    b.props.data.item.toLowerCase()
+                      ? 1
+                      : -1
+                  )}
+              </>
+            ) : (
+              this.props.categories.map(x => (
+                <Card key={x} onClick={this.handleSelection(x)}>
+                  <h2>{x}</h2>
+                </Card>
+              ))
+            )}
+          </StyledInventory>
+        </CSSTransition>
+      </Container>
     );
   }
 }
 
-export default Inventory;
+const mapStateToProps = state => {
+  return {
+    loading: state.loading,
+    error: state.error,
+    updating: state.updating,
+  };
+};
+
+export default connect(mapStateToProps)(Inventory);
