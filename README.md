@@ -33,7 +33,7 @@ Souper Stocker was created using create-react-app. To install and run this appli
 
 ## Directory Structure:
 
-- Assets - Contains design files - SVG logo and background image.
+- Assets: Contains design files - SVG logo and background image.
 
 - Components: Component directory contains several components that are used generally throughout the application (e.g. Loading, Error, Nav, Authentication). These components were not placed into a folder of their own due to their general nature. The following are sub-directories within the Component directory, grouping like components together:
 
@@ -42,3 +42,10 @@ Souper Stocker was created using create-react-app. To install and run this appli
   - Locations: Contains components related to the volunteer page, for use primarily by volunteer accounts.
 
 - Redux: Files related to the management of state within the Redux store are kept within the Redux directory. This directory includes both an Action and a Reducer sub-directory, to make navigation of action-creators and reducers as simple as possible.
+
+## Contributions:
+
+- We're happy to accept contributions from anyone seeking to improve our application.
+
+  - If you'd like to contribute by assisting in fixing an existing problem, please fork and clone the repository as detailed above. When submitting pull requests, please be thorough in explaining your reasoning for any changes, and what benefit you believe this change brings.
+  - If you notice a bug or issue with the application during use, please feel free to raise an issue to be address on the main repository. Select the `issues` tab on the repository, [here](https://github.com/soup-build-week-pt-project/soup-front-end/issues), and press the `New Issue` button. Please, once again, be thorough in describing the issue, and explain what steps can be taken to replicate it.
