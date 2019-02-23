@@ -66,7 +66,6 @@ const MidSection = styled.section`
 
 const StyledFooter = styled.footer`
   width: 100%;
-  height: 150px;
   border-top: 2px solid #222;
   background: #464646;
   color: #eee;

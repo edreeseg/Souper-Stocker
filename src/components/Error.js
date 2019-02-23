@@ -51,6 +51,7 @@ const StyledError = styled.div`
 
 class Error extends React.Component {
   handleClearError = e => {
+    if (this.props.error === 'jwt expired') localStorage.removeItem('soupUser');
     this.props.clearError();
     this.props.history.push('/auth');
   };

@@ -30,6 +30,16 @@ const StyledKitchen = styled.div`
       background: #535353;
     }
   }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.3;
+    border: 3px solid red;
+
+    &:hover {
+      cursor: default;
+    }
+  }
 `;
 
 class Kitchen extends React.Component {
@@ -51,7 +61,10 @@ class Kitchen extends React.Component {
         </h2>
       </StyledKitchen>
     ) : (
-      <StyledKitchen onClick={this.handleSignUp}>
+      <StyledKitchen
+        onClick={this.handleSignUp}
+        className={this.props.data.openings === 0 ? 'disabled' : null}
+      >
         <h4>{this.props.data.name}</h4>
         <p>{this.props.data.address}</p>
         {this.props.data.address2 ? <p>{this.props.data.address2}</p> : null}

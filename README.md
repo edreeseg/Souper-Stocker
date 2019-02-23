@@ -1,68 +1,44 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# **Souper Stocker**
 
-## Available Scripts
+## What is it?
 
-In the project directory, you can run:
+- Souper Stocker is a free application that allows for simple, intuitive inventory management among several soup kitchen locations. It allows managers at these locations to easily add, update, or delete items from their local inventory, and makes it easy to tell what items need to be ordered next at a glance. It also allows for the registration of volunteer accounts which make it easy to tell which kitchens need help, and where.
 
-### `npm start`
+## Motivation?
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Makes it easy to keep track of and modify inventory at multiple locations.
+- Provides a simple, functional user interface without sacrificing elegance.
+- Volunteer-level accounts and simple login allow for the possibility of a publicly available volunteer interface, further increasing efficiency.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Installation
 
-### `npm test`
+Souper Stocker was created using create-react-app. To install and run this application, perform the steps listed below.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Fork and clone this repository (e.g. `git clone`)
+- Run the command `yarn install` in root directory to install all required dependencies.
+- Run the command `yarn start` to run the applcation. By default application will start on `http://localhost:3000`.
 
-### `npm run build`
+- Dependencies:
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  - axios: ^0.18.0
+  - react: ^16.8.1,
+  - react-dom: ^16.8.1,
+  - react-router-dom: ^4.3.1,
+  - react-scripts: 2.1.5,
+  - redux: ^4.0.1,
+  - react-redux: ^6.0.0,
+  - redux-thunk: ^2.3.0,
+  - react-transition-group: ^2.5.3,
+  - styled-components: ^4.1.3
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Directory Structure:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Assets - Contains design files - SVG logo and background image.
 
-### `npm run eject`
+- Components: Component directory contains several components that are used generally throughout the application (e.g. Loading, Error, Nav, Authentication). These components were not placed into a folder of their own due to their general nature. The following are sub-directories within the Component directory, grouping like components together:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  - Home: Contains all components related to the main page of the application and inventory display.
+  - AddItem: Contains components related to the separate AddItem page, which works in tandem with the main page.
+  - Locations: Contains components related to the volunteer page, for use primarily by volunteer accounts.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- Redux: Files related to the management of state within the Redux store are kept within the Redux directory. This directory includes both an Action and a Reducer sub-directory, to make navigation of action-creators and reducers as simple as possible.

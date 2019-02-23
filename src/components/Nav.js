@@ -101,22 +101,6 @@ const BottomBar = styled.nav`
   a {
     text-decoration: none;
   }
-
-  > section {
-    height: 100%;
-    width: 40%;
-    margin-bottom: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: baseline;
-
-    span {
-      font-size: 0.75em;
-      width: 50%;
-      height: 15%;
-    }
-  }
   > div {
     width: 45%;
     display: flex;
@@ -126,6 +110,10 @@ const BottomBar = styled.nav`
     .refreshing {
       animation: spin 0.75s linear 0s infinite;
       color: #3aa74c;
+
+      span {
+        visibility: hidden;
+      }
     }
 
     @keyframes spin {
@@ -180,11 +168,24 @@ const BottomBar = styled.nav`
 `;
 
 const Icon = styled.span`
+  position: relative;
   text-decoration: none;
   font-size: 1.5em;
   color: ${props => (props.name === props.current ? '#3AA74C' : '#222')};
   user-select: none;
   cursor: pointer;
+
+  .label {
+    position: absolute;
+    width: 500%;
+    text-align: center;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 15px;
+    font-weight: normal;
+    font-family: 'Roboto', sans-serif;
+  }
 `;
 
 class Nav extends React.Component {
@@ -249,16 +250,6 @@ class Nav extends React.Component {
         </TopBar>
         <CSSTransition in={this.state.open} classNames="tray" timeout={500}>
           <BottomBar>
-            <section>
-              <span className="far fa-plus-square" />
-              <span>ADD ITEM</span>
-              <span className="far fa-edit" />
-              <span>UPDATE ITEM</span>
-              <span className="far fa-minus-square" />
-              <span>DELETE ITEM</span>
-              <span className="fas fa-sync-alt" />
-              <span>REFRESH INVENTORY</span>
-            </section>
             <div>
               <Link to="/add-item">
                 <Icon
@@ -266,20 +257,26 @@ class Nav extends React.Component {
                   name="POST"
                   current={this.props.currentOperation}
                   onClick={this.handleOperationChange}
-                />
+                >
+                  <span className="label">ADD ITEM</span>
+                </Icon>
               </Link>
               <Icon
                 className="far fa-edit icon-bottom"
                 name="PUT"
                 current={this.props.currentOperation}
                 onClick={this.handleOperationChange}
-              />
+              >
+                <span className="label">UPDATE ITEM</span>
+              </Icon>
               <Icon
                 className="far fa-minus-square icon-bottom"
                 name="DELETE"
                 current={this.props.currentOperation}
                 onClick={this.handleOperationChange}
-              />
+              >
+                <span className="label">DELETE ITEM</span>
+              </Icon>
               <Icon
                 className={`fas fa-sync-alt icon-bottom${
                   this.props.refreshing ? ' refreshing' : ''
@@ -287,7 +284,9 @@ class Nav extends React.Component {
                 name="GET"
                 current={this.props.currentOperation}
                 onClick={this.refresh}
-              />
+              >
+                <span className="label">REFRESH INVENTORY</span>
+              </Icon>
             </div>
           </BottomBar>
         </CSSTransition>

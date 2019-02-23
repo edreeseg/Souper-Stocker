@@ -44,8 +44,7 @@ const AuthForm = styled.form`
     background: transparent;
     color: #eee;
     border: 1px solid #eee;
-    width: 35%;
-    height: 30px;
+    padding: 5px 15px;
     cursor: pointer;
 
     &:hover {
@@ -111,7 +110,6 @@ const MidSection = styled.div`
 
 const StyledFooter = styled.footer`
   width: 100%;
-  height: 150px;
   border-top: 2px solid #222;
   background: #464646;
   color: #eee;

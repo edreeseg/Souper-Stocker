@@ -106,7 +106,7 @@ class Item extends React.Component {
     return (
       <CSSTransition in={true} timeout={300} classNames="in" appear={true}>
         <ItemCard
-          low={this.props.data.min_quan > this.props.data.amount ? 1 : 0}
+          low={this.props.data.min_quan >= this.props.data.amount ? 1 : 0}
           onClick={this.handleClick}
         >
           {/* The above is to avoid React Router error */}
