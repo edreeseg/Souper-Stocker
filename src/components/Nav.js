@@ -44,7 +44,7 @@ const TopBar = styled.section`
     a,
     span {
       display: flex;
-      font-size: 0.75em;
+      font-size: 0.7em;
       padding: 0 10px;
       justify-content: center;
       align-items: center;
@@ -73,8 +73,7 @@ const TopBar = styled.section`
 
   .logo-container {
     display: flex;
-    justify-content: ${props =>
-      props.loggedIn ? 'space-between' : 'flex-start'};
+    justify-content: space-between;
     align-items: center;
     width: 27%;
     padding: 0 20px;
@@ -227,7 +226,11 @@ class Nav extends React.Component {
             <Link to="/" onClick={() => this.props.setOperation(null)}>
               <img src={logo} alt="soup logo" />
             </Link>
-            {this.props.user ? <h2>Welcome, {this.props.user.name}!</h2> : null}
+            {this.props.user ? (
+              <h2>Welcome, {this.props.user.name}!</h2>
+            ) : (
+              <h2>Souper Stocker</h2>
+            )}
           </div>
           <div>
             <Link to="/volunteer">Volunteer</Link>

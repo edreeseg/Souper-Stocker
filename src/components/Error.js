@@ -54,7 +54,6 @@ class Error extends React.Component {
     if (this.props.error === 'jwt expired') localStorage.removeItem('soupUser');
     this.props.clearError();
     this.props.history.push('/');
-    window.location.reload();
   };
   render() {
     return (

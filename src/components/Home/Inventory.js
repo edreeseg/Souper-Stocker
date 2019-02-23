@@ -100,8 +100,44 @@ export const Card = styled.div`
       color: #eee;
     }
   }
+`;
 
-  h2 {
+const StyledFooter = styled.footer`
+  width: 100%;
+  border-top: 2px solid #222;
+  background: #464646;
+  color: #eee;
+  padding: 10px;
+
+  section {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+
+    div {
+      height: 80%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+
+      &:first-child {
+        width: 60%;
+      }
+      &:last-child {
+        width: 30%;
+      }
+    }
+  }
+
+  h3 {
+    margin-bottom: 5px;
+    font-size: 1.1em;
+  }
+
+  p {
+    font-size: 0.7em;
+    margin-bottom: 5px;
   }
 `;
 
@@ -118,52 +154,81 @@ class Inventory extends React.Component {
   };
   render() {
     return (
-      <Container bg={inventoryBG}>
-        <CSSTransition in={this.state.changing} timeout={300} classNames="out">
-          <StyledInventory>
-            <h1 className="title">{this.state.current || 'Categories'}</h1>
-            {this.props.loading ? (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <Loading color="#eee" />
-              </div>
-            ) : this.state.current ? (
-              <>
-                <span
-                  className="fas fa-undo-alt"
-                  onClick={e => this.setState({ current: null })}
-                />
-                {this.props.inventory
-                  .filter(x => x.category_id === this.state.current)
-                  .map(x => (
-                    <Item
-                      key={x.id}
-                      data={x}
-                      updating={this.props.updating === x.id ? 1 : 0}
-                    />
-                  ))
-                  .sort((a, b) =>
-                    a.props.data.item.toLowerCase() >=
-                    b.props.data.item.toLowerCase()
-                      ? 1
-                      : -1
-                  )}
-              </>
-            ) : (
-              this.props.categories.map(x => (
-                <Card key={x} onClick={this.handleSelection(x)}>
-                  <h2>{x}</h2>
-                </Card>
-              ))
-            )}
-          </StyledInventory>
-        </CSSTransition>
-      </Container>
+      <>
+        <Container bg={inventoryBG}>
+          <CSSTransition
+            in={this.state.changing}
+            timeout={300}
+            classNames="out"
+          >
+            <StyledInventory>
+              <h1 className="title">{this.state.current || 'Categories'}</h1>
+              {this.props.loading ? (
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Loading color="#eee" />
+                </div>
+              ) : this.state.current ? (
+                <>
+                  <span
+                    className="fas fa-undo-alt"
+                    onClick={e => this.setState({ current: null })}
+                  />
+                  {this.props.inventory
+                    .filter(x => x.category_id === this.state.current)
+                    .map(x => (
+                      <Item
+                        key={x.id}
+                        data={x}
+                        updating={this.props.updating === x.id ? 1 : 0}
+                      />
+                    ))
+                    .sort((a, b) =>
+                      a.props.data.item.toLowerCase() >=
+                      b.props.data.item.toLowerCase()
+                        ? 1
+                        : -1
+                    )}
+                </>
+              ) : (
+                this.props.categories.map(x => (
+                  <Card key={x} onClick={this.handleSelection(x)}>
+                    <h2>{x}</h2>
+                  </Card>
+                ))
+              )}
+            </StyledInventory>
+          </CSSTransition>
+        </Container>
+        <StyledFooter>
+          <section>
+            <div>
+              <h3>Special Thanks</h3>
+              <p>
+                Icons made by Smashicons from www.flaticon.com is licensed by CC
+                3.0 BY 2019 Souper Stock
+              </p>
+            </div>
+            <div>
+              <address>
+                <p>
+                  Test Kitchen 1<br />
+                  123 Lambda Way
+                  <br />
+                  San Francisco, CA 12000
+                  <br />
+                  (555) 555-5555
+                </p>
+              </address>
+            </div>
+          </section>
+        </StyledFooter>
+      </>
     );
   }
 }

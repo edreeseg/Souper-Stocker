@@ -16,7 +16,7 @@ const ItemCard = styled.div`
   justify-content: center;
   align-items: center;
   background: #eee;
-  min-height: 5%;
+  min-height: 250px;
   padding: 10px;
   margin-bottom: 20px;
   align-self: flex-start;
@@ -68,6 +68,11 @@ const UpdateForm = styled.form`
   }
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 class Item extends React.Component {
   state = {
     editing: false,
@@ -102,6 +107,15 @@ class Item extends React.Component {
     );
     this.setState({ editing: false });
   };
+  cancelEdit = e => {
+    e.stopPropagation();
+    this.setState({
+      editing: false,
+      item: this.props.data.item,
+      amount: this.props.data.amount,
+      unit: this.props.data.unit,
+    });
+  };
   render() {
     return (
       <CSSTransition in={true} timeout={300} classNames="in" appear={true}>
@@ -133,7 +147,12 @@ class Item extends React.Component {
                 value={this.state.unit}
                 onChange={this.handleChange}
               />
-              <button>Submit</button>
+              <ButtonContainer>
+                <button type="button" onClick={this.cancelEdit}>
+                  Cancel
+                </button>
+                <button>Submit</button>
+              </ButtonContainer>
             </UpdateForm>
           ) : (
             <>
