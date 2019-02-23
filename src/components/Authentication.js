@@ -38,7 +38,7 @@ const AuthForm = styled.form`
     width: 100%;
   }
   p {
-    font-size: 0.75em;
+    font-size: 0.65em;
   }
   button {
     background: transparent;
@@ -150,7 +150,7 @@ const StyledFooter = styled.footer`
 const Register = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 150%;
+  width: 100%;
 
   div {
     display: flex;

@@ -108,6 +108,7 @@ class AddItem extends React.Component {
       color_img: '',
       category_id: '',
     });
+    this.props.history.push('/');
   };
 
   render() {
@@ -162,6 +163,7 @@ class AddItem extends React.Component {
               name="category_id"
               onChange={this.handleChange}
               value={this.state.category}
+              defaultValue=""
             >
               <option value="" disabled hidden>
                 Category

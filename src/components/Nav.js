@@ -224,7 +224,7 @@ class Nav extends React.Component {
       <StyledNav>
         <TopBar open={this.state.open} loggedIn={this.props.user}>
           <div className="logo-container">
-            <Link to="/">
+            <Link to="/" onClick={() => this.props.setOperation(null)}>
               <img src={logo} alt="soup logo" />
             </Link>
             {this.props.user ? <h2>Welcome, {this.props.user.name}!</h2> : null}
