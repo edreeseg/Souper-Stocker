@@ -124,7 +124,7 @@ class Locations extends React.Component {
               <p>
                 There's always something to be done for someone in need. Select
                 a kitchen below and confirm your information to inquire about
-                volunteer opportunities.
+                volunteer opportunities
               </p>
             </div>
             <img src="https://i.imgur.com/Xo9PMVY.jpg" alt="bowl of soup" />

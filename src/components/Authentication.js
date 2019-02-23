@@ -385,9 +385,9 @@ class Authentication extends React.Component {
           />
           <div>
             <h2>Be a Part of Something</h2>
-            <p>Volunteer your time and brighten someone's day.</p>
+            <p>Volunteer your time and brighten someone's day</p>
             <h3>Flexible and Transparent Scheduling</h3>
-            <p>See who needs help and where - no question, no uncertainty.</p>
+            <p>See who needs help and where - no question, no uncertainty</p>
           </div>
         </MidSection>
         <StyledFooter>
