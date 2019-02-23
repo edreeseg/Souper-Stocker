@@ -76,15 +76,7 @@ class AddItem extends React.Component {
       this.state.color_img,
       this.state.category_id,
     ];
-    if (
-      !item ||
-      !amount ||
-      !unit ||
-      !min_quan ||
-      !bw_img ||
-      !color_img ||
-      !category_id
-    ) {
+    if (!item || !amount || !unit || !min_quan || !color_img || !category_id) {
       return this.setState({ error: 'Please provide values for all fields.' });
     }
     this.props.addItem(
@@ -147,17 +139,17 @@ class AddItem extends React.Component {
             />
             <input
               type="text"
-              placeholder="Black and White Image URL"
-              name="bw_img"
-              onChange={this.handleChange}
-              value={this.state.bw_img}
-            />
-            <input
-              type="text"
               placeholder="Color Image URL"
               name="color_img"
               onChange={this.handleChange}
               value={this.state.color_img}
+            />
+            <input
+              type="text"
+              placeholder="Black and White Image URL"
+              name="bw_img"
+              onChange={this.handleChange}
+              value={this.state.bw_img}
             />
             <select
               name="category_id"

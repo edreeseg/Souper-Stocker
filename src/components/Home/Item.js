@@ -41,6 +41,10 @@ const ItemCard = styled.div`
     height: 100px;
     margin: 10px 0;
   }
+  .low-img {
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+  }
 
   /* React-Transition-Group Styles */
 
@@ -166,18 +170,20 @@ class Item extends React.Component {
                   </h2>
                   <img
                     src={
+                      this.props.data.amount <= this.props.data.min_quan &&
+                      this.props.data.bw_img
+                        ? this.props.data.bw_img
+                        : this.props.data.color_img
+                    }
+                    className={
                       this.props.data.amount > this.props.data.min_quan
-                        ? this.props.data.color_img
-                        : this.props.data.bw_img
+                        ? null
+                        : 'low-img'
                     }
                     alt={this.props.data.item}
                   />
                   <p>Quantity: {this.props.data.amount}</p>
-                  <p>
-                    Unit:{' '}
-                    {this.props.data.unit.charAt(0).toUpperCase() +
-                      this.props.data.unit.slice(1)}
-                  </p>
+                  <p>Unit: {this.props.data.unit}</p>
                 </>
               )}
             </>

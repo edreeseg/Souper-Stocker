@@ -48,7 +48,6 @@ export const addItem = (obj, user) => dispatch => {
     !amount ||
     !unit ||
     !min_quan ||
-    !bw_img ||
     !color_img ||
     !category_id ||
     !location_id
