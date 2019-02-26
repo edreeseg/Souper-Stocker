@@ -1,50 +1,37 @@
-import axios from 'axios';
-
-export const LOADING = 'LOADING';
 export const ERROR = 'ERROR';
+export const LOADING = 'LOADING';
+export const CLEAR_ERROR = 'CLEAR_ERROR';
 
-export { REGISTRATION_SUCCESS, LOGIN_SUCCESS } from './users';
-export { register, login } from './users';
+export {
+  REGISTRATION_SUCCESS,
+  LOGIN_SUCCESS,
+  LOGOUT,
+  DELETE_USER_SUCCESS,
+} from './users';
 
-export const ADD_ITEM_SUCCESS = 'ADD_ITEM_SUCCESS';
-export const GET_INVENTORY_SUCCESS = 'GET_LOCATION_SUCCESS';
-export const EDIT_INVENTORY = 'EDIT_INVENTORY';
-export const LOGIN = 'LOGIN';
+export { register, login, logout, deleteUser, setStoredInfo } from './users';
 
-export const getInventory = id => dispatch => {
-  dispatch({ type: LOADING });
-  axios
-    .get(`http://localhost:5500/inventory/${id}`) // id will be dynamic based on user
-    .then(res => dispatch({ type: GET_INVENTORY_SUCCESS, payload: res.data }))
-    .catch(err =>
-      dispatch({
-        type: ERROR,
-        payload: err.response
-          ? err.response.data.message
-          : 'There was an error while attempting to get inventory.',
-      })
-    );
-};
+export {
+  SET_OPERATION,
+  GET_INVENTORY_SUCCESS,
+  ADD_ITEM_SUCCESS,
+  UPDATING_ITEM,
+  UPDATE_ITEM_SUCCESS,
+  DELETE_ITEM_SUCCESS,
+} from './inventory';
 
-export const addItem = (id, obj) => dispatch => {
-  dispatch({ type: LOADING });
-  const { item, amount, unit, category_id, location_id } = obj;
-  if (!item || !amount || !unit || !category_id || !location_id)
-    return dispatch({
-      type: ERROR,
-      payload:
-        'Items must include name, amount, unit, category_id, and location_id keys.',
-    });
-  const newItem = { item, amount, unit, category_id, location_id };
-  axios
-    .post(`http://localhost:5500/inventory/${id}`, newItem)
-    .then(res => dispatch({ type: ADD_ITEM_SUCCESS, payload: res.data }))
-    .catch(err =>
-      dispatch({
-        type: ERROR,
-        payload: err.response
-          ? err.response.data.message
-          : 'There was an error while attempting to add item.',
-      })
-    );
+export {
+  setOperation,
+  getInventory,
+  addItem,
+  updateItem,
+  deleteItem,
+} from './inventory';
+
+export { GET_LOC_SUCCESS } from './locations';
+
+export { getLocations } from './locations';
+
+export const clearError = () => dispatch => {
+  dispatch({ type: CLEAR_ERROR });
 };

@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
-import { getInventory } from '../redux/actions';
+import logo from '../assets/soup.svg';
+import { getInventory, setOperation, logout } from '../redux/actions';
 
 const StyledNav = styled.header`
   display: flex;
@@ -12,7 +13,6 @@ const StyledNav = styled.header`
   width: 100%;
 
   .icon-top {
-    font-size: 2.5rem;
     cursor: pointer;
   }
 
@@ -20,7 +20,6 @@ const StyledNav = styled.header`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 3.5rem;
   }
 `;
 
@@ -28,8 +27,13 @@ const TopBar = styled.section`
   background-color: #464646;
   height: 45px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
+
+  h2 {
+    color: #eee;
+    margin-left: 10px;
+  }
 
   div {
     height: 100%;
@@ -40,13 +44,15 @@ const TopBar = styled.section`
     a,
     span {
       display: flex;
+      font-size: 0.7em;
+      padding: 0 10px;
       justify-content: center;
       align-items: center;
       height: 100%;
-      width: 10%;
       text-decoration: none;
       color: #eee;
       user-select: none;
+      cursor: pointer;
 
       &:hover,
       &.top-active {
@@ -56,8 +62,28 @@ const TopBar = styled.section`
         background: #848484;
       }
     }
-    span {
+    .inventory-button {
+      padding: 0 20px;
+      font-size: 1em;
+    }
+    .icon-top {
       background: ${props => (props.open ? '#707070' : 'transparent')};
+    }
+  }
+
+  .logo-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 27%;
+    padding: 0 20px;
+
+    h2 {
+      font-size: 0.75em;
+    }
+
+    img {
+      height: 90%;
     }
   }
 `;
@@ -71,33 +97,22 @@ const BottomBar = styled.nav`
   justify-content: space-around;
   align-items: center;
 
-  img {
-    height: 80%;
-    min-height: 88px;
-    user-select: none;
-    border-radius: 20px;
+  a {
+    text-decoration: none;
   }
-  div {
+  > div {
     width: 45%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    a,
-    .icon-bottom {
-      text-decoration: none;
-      color: #222;
-      user-select: none;
-      cursor: pointer;
-
-      &.bottom-active {
-        .icon-bottom {
-          font-size: 4rem;
-        }
-      }
-    }
     .refreshing {
       animation: spin 0.75s linear 0s infinite;
+      color: #3aa74c;
+
+      span {
+        visibility: hidden;
+      }
     }
 
     @keyframes spin {
@@ -151,65 +166,130 @@ const BottomBar = styled.nav`
   }
 `;
 
+const Icon = styled.span`
+  position: relative;
+  text-decoration: none;
+  font-size: 1.5em;
+  color: ${props => (props.name === props.current ? '#3AA74C' : '#222')};
+  user-select: none;
+  cursor: pointer;
+
+  .label {
+    position: absolute;
+    width: 500%;
+    text-align: center;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 15px;
+    font-weight: normal;
+    font-family: 'Roboto', sans-serif;
+  }
+`;
+
 class Nav extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
-      refreshing: false,
     };
   }
-  refresh = () => {
-    this.setState({ refreshing: true });
-    setTimeout(() => this.setState({ refreshing: false }), 3000); // Would likely be an AJAX call
+  componentDidUpdate(prevProps, prevState) {
+    if (!this.props.user || this.props.user.role !== 1)
+      if (prevState.open) this.setState({ open: false });
+  }
+  handleOperationChange = e => {
+    const name = e.target.getAttribute('name');
+    this.props.setOperation(name === this.props.currentOperation ? null : name);
+  };
+  handleLogout = e => {
+    localStorage.removeItem('soupUser');
+    this.props.logout();
+    this.props.history.push('/auth');
+  };
+  refresh = e => {
+    this.props.getInventory(this.props.user);
+    if (this.props.currentOperation === 'POST') {
+      this.props.history.push('/');
+      this.props.setOperation(null);
+    }
+  };
+  openMenu = e => {
+    if (this.props.user && this.props.user.role === 1)
+      this.setState(prevState => ({ open: !prevState.open }));
   };
   render() {
     return (
       <StyledNav>
-        <TopBar open={this.state.open}>
+        <TopBar open={this.state.open} loggedIn={this.props.user}>
+          <div className="logo-container">
+            <Link to="/" onClick={() => this.props.setOperation(null)}>
+              <img src={logo} alt="soup logo" />
+            </Link>
+            {this.props.user ? (
+              <h2>Welcome, {this.props.user.name}!</h2>
+            ) : (
+              <h2>Souper Stocker</h2>
+            )}
+          </div>
           <div>
-            <NavLink to="/1" activeClassName="top-active">
-              Test
-            </NavLink>
-            <NavLink to="/2" activeClassName="top-active">
-              Test
-            </NavLink>
-            <NavLink to="/3" activeClassName="top-active">
-              Test
-            </NavLink>
-            <NavLink to="/4" activeClassName="top-active">
-              Sign In
-            </NavLink>
+            <Link to="/volunteer">Volunteer</Link>
+            <a href="https://serene-snyder-c92c58.netlify.com/about.html">
+              About Us
+            </a>
+            {this.props.user ? (
+              <span>My Account</span>
+            ) : (
+              <span>My Account</span>
+            )}
+            <span onClick={this.handleLogout}>
+              {this.props.user ? 'Logout' : 'Login'}
+            </span>
             <span
-              className="fas fa-clipboard-list icon-top"
-              onClick={() =>
-                this.setState(prevState => ({ open: !prevState.open }))
-              }
+              className="fas fa-clipboard-list icon-top inventory-button"
+              onClick={this.openMenu}
             />
           </div>
         </TopBar>
         <CSSTransition in={this.state.open} classNames="tray" timeout={500}>
           <BottomBar>
-            <img src="https://i.imgur.com/ixE731v.jpg" alt="placeholder logo" />
             <div>
-              <NavLink to="/" exact activeClassName="bottom-active">
-                <span className="fas fa-home icon-bottom" />
-              </NavLink>
-              <NavLink to="/add-item" activeClassName="bottom-active">
-                <span className="far fa-plus-square icon-bottom" />
-              </NavLink>
-              <NavLink to="/modify-item" activeClassName="bottom-active">
-                <span className="far fa-edit icon-bottom" />
-              </NavLink>
-              <NavLink to="/delete-item" activeClassName="bottom-active">
-                <span className="far fa-minus-square icon-bottom" />
-              </NavLink>
-              <span
+              <Link to="/add-item">
+                <Icon
+                  className="far fa-plus-square icon-bottom"
+                  name="POST"
+                  current={this.props.currentOperation}
+                  onClick={this.handleOperationChange}
+                >
+                  <span className="label">ADD ITEM</span>
+                </Icon>
+              </Link>
+              <Icon
+                className="far fa-edit icon-bottom"
+                name="PUT"
+                current={this.props.currentOperation}
+                onClick={this.handleOperationChange}
+              >
+                <span className="label">UPDATE ITEM</span>
+              </Icon>
+              <Icon
+                className="far fa-minus-square icon-bottom"
+                name="DELETE"
+                current={this.props.currentOperation}
+                onClick={this.handleOperationChange}
+              >
+                <span className="label">DELETE ITEM</span>
+              </Icon>
+              <Icon
                 className={`fas fa-sync-alt icon-bottom${
-                  this.state.refreshing ? ' refreshing' : ''
+                  this.props.refreshing ? ' refreshing' : ''
                 }`}
+                name="GET"
+                current={this.props.currentOperation}
                 onClick={this.refresh}
-              />
+              >
+                <span className="label">REFRESH INVENTORY</span>
+              </Icon>
             </div>
           </BottomBar>
         </CSSTransition>
@@ -220,15 +300,18 @@ class Nav extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    userId: state.userId,
+    user: state.user,
     error: state.error,
+    loading: state.loading,
+    refreshing: state.refreshing,
+    currentOperation: state.currentOperation,
   };
 };
 
 export default connect(
   // Must be written this way so React-Redux plays nice with React-Router.
   mapStateToProps,
-  { getInventory },
+  { getInventory, setOperation, logout },
   null,
   { pure: false }
 )(Nav);

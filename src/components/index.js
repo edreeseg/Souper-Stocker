@@ -1,5 +1,6 @@
 export { default as Nav } from './Nav';
-export { default as Home } from './Home';
-export { default as AddInventory } from './AddInventory';
-export { default as Register } from './Register';
-export { default as Login } from './Login';
+export { default as Home } from './Home/Home';
+export { default as AddItem } from './AddItem/AddItem';
+export { default as Authentication } from './Authentication';
+export { default as Locations } from './Locations/Locations';
+export { default as Error } from './Error';

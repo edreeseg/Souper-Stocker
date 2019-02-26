@@ -4,21 +4,22 @@ export const LOADING = 'LOADING';
 export const ERROR = 'ERROR';
 export const REGISTRATION_SUCCESS = 'REGISTRATION_SUCCESS';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
+export const LOGOUT = 'LOGOUT';
 
 export const register = object => dispatch => {
   dispatch({ type: LOADING });
-  const { name, title, username, password, role_id, loc_id } = object;
-  console.log(role_id);
-  if (!name || !title || !username || !password || role_id === null)
+  const { name, title, username, password, email, role_id, loc_id } = object;
+  if (!name || !title || !username || !password || !email || role_id === null)
     return dispatch({
       type: ERROR,
       payload:
-        'Registration request must include name, title, username, password, and role_id keys.',
+        'Registration request must include name, title, username, password, email, and role_id keys.',
     });
-  const user = { name, title, username, password, role_id };
-  if (object.loc_id) user.loc_id = object.loc_id;
+  const user = { name, title, username, password, email, role_id };
+  if (loc_id) user.loc_id = loc_id;
   axios
-    .post('http://localhost:5500/users/register', user)
+    .post('https://soup-back-end-2.herokuapp.com/users/register', user)
     .then(res => dispatch({ type: REGISTRATION_SUCCESS, payload: res.data }))
     .catch(err =>
       dispatch({
@@ -33,8 +34,31 @@ export const register = object => dispatch => {
 export const login = user => dispatch => {
   dispatch({ type: LOADING });
   axios
-    .post('http://localhost:5500/users/login', user)
+    .post('https://soup-back-end-2.herokuapp.com/users/login', user)
     .then(res => dispatch({ type: LOGIN_SUCCESS, payload: res.data }))
+    .catch(err =>
+      dispatch({
+        type: ERROR,
+        payload: err.response
+          ? err.response.data.message
+          : 'There was an error while attempting to get inventory.',
+      })
+    );
+};
+
+export const setStoredInfo = user => dispatch => {
+  dispatch({ type: LOGIN_SUCCESS, payload: user });
+};
+
+export const logout = () => dispatch => {
+  dispatch({ type: LOGOUT });
+};
+
+export const deleteUser = id => dispatch => {
+  dispatch({ type: LOADING });
+  axios
+    .delete(`https://soup-back-end-2.herokuapp.com/${id}`)
+    .then(res => dispatch({ type: DELETE_USER_SUCCESS, payload: res.data })) // Returns number of deleted items - need to test?
     .catch(err =>
       dispatch({
         type: ERROR,

@@ -10,8 +10,10 @@ import './index.css';
 import App from './App';
 
 ReactDOM.render(
-<Provider store={createStore(reducer, applyMiddleware(thunk, logger))}>
-  <Router>
-    <App />
-  </Router>  
-</Provider>, document.getElementById('root'));
+  <Provider store={createStore(reducer, applyMiddleware(thunk, logger))}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>,
+  document.getElementById('root')
+);
